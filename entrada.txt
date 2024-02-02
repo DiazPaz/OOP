@@ -1,0 +1,7 @@
+un
+Este es un ejemplo con un conjunto de palabras que tienen la palabra un
+varias veces.
+o
+Otro ejemplo con la o.
+i
+Maria lava la tina.

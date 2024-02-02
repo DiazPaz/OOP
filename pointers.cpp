@@ -1,7 +1,10 @@
 #include <iostream>
 #include <stdio.h>
+#include <cstdlib>
 
 int main(void){
+  
+  system("clear"); 
 
   int a = 7; 
   int *aPtr = &a; 
@@ -14,5 +17,7 @@ int main(void){
   
   std::cout << "&*aPtr = " << &*aPtr << "\n"; 
   std::cout << "*&aPtr = " << *&aPtr; 
+
+  getchar(); 
 
 }
