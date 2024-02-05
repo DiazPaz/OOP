@@ -17,13 +17,15 @@ Implemente las funciones: (10 pts c/u)
 int main(void){
 
   string frase = "Hola mundo. Espero que estes bien. Hola. ";
-  int letras = 0, palabras = 0, oraciones = 0, parrafos = 1;
+  
+  int letras = 0, palabras = 0, oraciones = 0, parrafos = 1, k = 0, j = 0;
+  int contRep = 0; 
   double promPal = 0; 
   bool aux; 
-
+  
   for(int i = 0; i < frase.length(); i++){
     // conteo de palabras
-    aux = false;
+    aux = false; 
     while(isalpha(frase[i])){
       aux = true;
       letras++;
@@ -44,6 +46,26 @@ int main(void){
     }
   }
 
+  string repetidas[palabras];
+  for (int i = 0; i < frase.length(); i++) {
+    // Saltar los caracteres no alfabéticos
+    while (i < frase.length() && !isalpha(frase[i])) {
+      i++;
+    }
+    // Encontrar el final de la palabra
+    j = i;
+    while (j < frase.length() && isalpha(frase[j])) {
+      j++;
+    }
+    // Almacenar la palabra en repetidas
+    if (i < j) {
+      repetidas[k] = frase.substr(i, j - i);
+      k++;
+    }
+    // Saltar el resto de la palabra
+    i = j - 1;
+  }
+
   // promedio de longitud por palabra
   promPal = (letras*1.0)/palabras; 
 
@@ -52,6 +74,10 @@ int main(void){
   cout << "Oraciones: " << oraciones << "\n";
   cout << "Parrafos: " << parrafos << "\n";
   cout << "Longitud promedio de palabras: " << promPal << "\n";
+  cout << "Str: " << endl;
+  for(int i = 0; i < palabras; i++){
+    cout << "\t" << repetidas[i] << "\n";
+  }
 
   getchar();
   return 0;
