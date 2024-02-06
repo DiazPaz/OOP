@@ -50,12 +50,10 @@ void masRepetido(int fpalabras, const string *fArrPal){
 
 int main(void){
 
-  string frase = "Hola mundo. Hola, Bien Bien Bien bien hola Espero que estes bien. Hola. Bien";
+  string frase = "Esta oracion se repite mucho, por lo cual la palabra que mas se repite es 'repite'. Repite la frase y entenderas.";
   
-  int letras = 0, palabras = 0, oraciones = 0, parrafos = 1, k = 0, j = 0;
-  int contRep = 0; 
-  double promPal = 0; 
-  bool aux; 
+  int letras = 0, palabras = 0, oraciones = 0, parrafos = 1;
+  double promPal = 0; bool aux; 
   
   for(int i = 0; i < frase.length(); i++){
     // conteo de palabras
@@ -80,7 +78,7 @@ int main(void){
     }
   }
 
-  string arrPal[palabras];
+  string arrPal[palabras]; int k = 0, j = 0;
   for (int i = 0; i < frase.length(); i++) {
     // Saltar los caracteres no alfabéticos
     while (i < frase.length() && !isalpha(frase[i])) {
@@ -112,7 +110,6 @@ int main(void){
   coutLista(palabras, arrPal);
   cout << endl;
   masRepetido(palabras, arrPal);
-
   
   //getchar();
   return 0;
