@@ -14,9 +14,44 @@ Implemente las funciones: (10 pts c/u)
 4. calcular la longitud promedio de las palabras ----OK
 5. identificar las 3 palabras más comunes */
 
+void coutLista(int fpalabras, const string *fArrPal){
+  for(int i = 0; i < fpalabras; i++){
+    cout << "\t" << fArrPal[i] << "\n";
+  } 
+}
+
+void masRepetido(int fpalabras, const string *fArrPal){
+  int max = 0;
+  string masRepetida = "";
+  for (int i = 0; i < fpalabras; i++) {
+    int contador = 1;
+    for (int j = i + 1; j < fpalabras; j++) {
+      string lowerJ = fArrPal[j], lowerI = fArrPal[i];  
+      for(char &c: lowerI){
+        c = tolower(c);
+      }
+      for(char &c: lowerJ){
+        c = tolower(c);
+      }
+      if (lowerI == lowerJ) {
+        contador++;
+      }
+    }
+    if (contador > max) {
+      max = contador;
+      masRepetida = fArrPal[i];
+    }
+  }
+  if (masRepetida != "") {
+    cout << "La palabra más repetida es: " << masRepetida << " (" << max << " veces)" << endl;
+  } else {
+    cout << "No hay palabras repetidas." << endl;
+  }
+}
+
 int main(void){
 
-  string frase = "Hola mundo. Espero que estes bien. Hola. ";
+  string frase = "Hola mundo. Hola, Bien Bien Bien bien hola Espero que estes bien. Hola. Bien";
   
   int letras = 0, palabras = 0, oraciones = 0, parrafos = 1, k = 0, j = 0;
   int contRep = 0; 
@@ -46,7 +81,7 @@ int main(void){
     }
   }
 
-  string repetidas[palabras];
+  string arrPal[palabras];
   for (int i = 0; i < frase.length(); i++) {
     // Saltar los caracteres no alfabéticos
     while (i < frase.length() && !isalpha(frase[i])) {
@@ -59,7 +94,7 @@ int main(void){
     }
     // Almacenar la palabra en repetidas
     if (i < j) {
-      repetidas[k] = frase.substr(i, j - i);
+      arrPal[k] = frase.substr(i, j - i);
       k++;
     }
     // Saltar el resto de la palabra
@@ -75,10 +110,11 @@ int main(void){
   cout << "Parrafos: " << parrafos << "\n";
   cout << "Longitud promedio de palabras: " << promPal << "\n";
   cout << "Str: " << endl;
-  for(int i = 0; i < palabras; i++){
-    cout << "\t" << repetidas[i] << "\n";
-  }
+  coutLista(palabras, arrPal);
+  cout << endl;
+  masRepetido(palabras, arrPal);
 
-  getchar();
+  
+  //getchar();
   return 0;
 }
