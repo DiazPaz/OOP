@@ -27,11 +27,16 @@ void coutLista(int fpalabras, const string *fArrPal){
 // del ciclo for una funcion condicional que si la palabra pasada es igual a la actual (fArrPal[i]),
 // tendremos que sumar 1 al contador i.
 void masRepetido(int fpalabras, const string *fArrPal){
-  int max = 0, k = 0;
+  int max = 0, j, k = 0, contador;
   string masRepetida = "", segRepetida = "", terRepetida = "";
   while(k < 3){
     for(int i = 0; i < fpalabras; i++){
-      int contador = 1, j;
+      contador = 1;
+      if(k == 1 && masRepetida == fArrPal[i]){
+        i++;
+      } else if(k == 2 && segRepetida == fArrPal[i] && masRepetida == fArrPal[i]){
+        i++;
+      }
       for(j = i + 1; j < fpalabras; j++){
         string lowerJ = fArrPal[j], lowerI = fArrPal[i];
         for(char &c: lowerI){
@@ -44,28 +49,23 @@ void masRepetido(int fpalabras, const string *fArrPal){
           contador++;
         }
       }
-      if(contador > max){
+
+      if(contador > max && k == 0){
         max = contador;
         masRepetida = fArrPal[i];
-      }
-
-      /*if(max > segunda){
-        segunda = contador;
+      } else if(contador > max && k == 1){
+        max = contador;
         segRepetida = fArrPal[i];
-      }
-      if(segunda > tercera){
-        tercera = contador;
+      } else if(contador > max && k == 2){
+        max = contador;
         terRepetida = fArrPal[i];
-      }*/
+      }
 
     }
     k++;
   }
 
 
-  /*
-
-     This is an example sentence.
 
    if (masRepetida != "") {
     cout << "La palabra más repetida es: " << masRepetida << " (" << max << " veces)" << endl;
@@ -73,11 +73,11 @@ void masRepetido(int fpalabras, const string *fArrPal){
     cout << "No hay palabras repetidas." << endl;
   }
   if (segRepetida != "") {
-    cout << "La segunda palabra más repetida es: " << segRepetida << " (" << segunda << " veces)" << endl;
+    cout << "La segunda palabra más repetida es: " << segRepetida << endl;
   }
   if (terRepetida != "") {
-    cout << "La tercera palabra más repetida es: " << terRepetida << " (" << tercera << " veces)" << endl;
-  }*/
+    cout << "La tercera palabra más repetida es: " << terRepetida << endl;
+  }
 
 
 }
