@@ -2,18 +2,15 @@ class Complejo{
 
   public:
     Complejo();
-    Complejo(int, int);
-    int suma(int, int);
-    int resta(int, int);
-    void setComplejo(int);
-    int getCompSum(int);
-    int getCompRes(int);
+    Complejo(double, double);
+    vector<int> suma(vector<int>);
+    vector<int> resta(vector<int>);
+    void setComplejo(double, double);
+    vector<int> getComplejo();
 
   private:
-    int real;
-    int imaginario;
-    int comSum[2];
-    int comRes[2];
+    double real;
+    double imaginario;    
 
 };
 
@@ -22,29 +19,37 @@ Complejo::Complejo(){
   imaginario = 0;
 }
 
-Complejo::Complejo(int r, int i){
+Complejo::Complejo(double r, double i){
   real = r;
   imaginario = i;
 }
 
-void Complejo::setComplejo(int r, int i){
+void Complejo::setComplejo(double r, double i){
   real = r;
   imaginario = i;
 }
 
-int Complejo::suma(int a, int b){
-  int comA = real + a;
-  int comB = imaginario + b;
-  comSum = {comA, comB};
-  //cout << "(" << comA << "," << comB << ")\n";
+vector<int> Complejo::getComplejo(){
+  vector<int> complejo;
+  complejo.push_back(real);
+  complejo.push_back(imaginario);
+  return complejo;
 }
 
-int Complejo::resta(int a, int b){
-  int comA = real - a;
-  int comB = imaginario - b;
-  //cout << "(" << comA << "," << comB << ")\n";
-  comRes = {comA, comB};
+vector<int> Complejo::suma(vector<int> a){
+  vector<int> comSum;
+  int comA = real + a[0];
+  comSum.push_back(comA);
+  int comB = imaginario + a[1];
+  comSum.push_back(comB);
+  return comSum; 
 }
 
-int Complejo::getCompSum(int){
+vector<int> Complejo::resta(vector<int> a){
+  vector<int> comRes;
+  int comA = real - a[0];
+  comRes.push_back(comA);
+  int comB = imaginario - a[1];
+  comRes.push_back(comB);
+  return comRes;
 }
