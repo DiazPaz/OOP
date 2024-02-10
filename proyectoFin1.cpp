@@ -3,15 +3,15 @@
 
 using namespace std;
 
-/* Cree un programa que lea texto de un archivo (10 pts) y lo analice, generando un archivo llamado
-Reporte.txt (10 pts).
+/* Cree un programa que lea texto de un archivo (10 pts) 
+y lo analice, generando un archivo llamado Reporte.txt (10 pts).
 Deberá pedir al usuario el nombre del archivo .txt (10 pts)
 Implemente las funciones: (10 pts c/u)
 1. contar la cantidad de palabras ----OK
 2. contar oraciones ----OK
 3. contar párrafos ----OK
 4. calcular la longitud promedio de las palabras ----OK
-5. identificar las 3 palabras más comunes */
+5. identificar las 3 palabras más comunes ----OK */
 
 void coutLista(int fpalabras, const string *fArrPal){
   for(int i = 0; i < fpalabras; i++){
@@ -19,22 +19,15 @@ void coutLista(int fpalabras, const string *fArrPal){
   }
 }
 
-// dentro de un ciclo while el cual se repetira 3 veces, se tendra un ciclo for el cual
-// detectara la palabra mas repetida. En cada ciclo nuevo no se podra utilizar la palabra
-// mas repetida del ciclo pasado, por lo tanto sugiero utilizar una funcion para el ciclo
-// for el cual tenga como parametros el arreglo, el numero de palabras, el contador de
-// la palabra mas repetida y el string de la palabra mas repetida. Por ultimo, tener dentro
-// del ciclo for una funcion condicional que si la palabra pasada es igual a la actual (fArrPal[i]),
-// tendremos que sumar 1 al contador i.
 void masRepetido(int fpalabras, const string *fArrPal){
-  int max = 0, j, k = 0, contador;
+  int max = 0, seg = 0, ter = 0, j, k = 0, contador;
   string masRepetida = "", segRepetida = "", terRepetida = "";
   while(k < 3){
     for(int i = 0; i < fpalabras; i++){
       contador = 1;
       if(k == 1 && masRepetida == fArrPal[i]){
         i++;
-      } else if(k == 2 && segRepetida == fArrPal[i] && masRepetida == fArrPal[i]){
+      } else if(k == 2 && segRepetida == fArrPal[i] || masRepetida == fArrPal[i]){
         i++;
       }
       for(j = i + 1; j < fpalabras; j++){
@@ -53,11 +46,11 @@ void masRepetido(int fpalabras, const string *fArrPal){
       if(contador > max && k == 0){
         max = contador;
         masRepetida = fArrPal[i];
-      } else if(contador > max && k == 1){
-        max = contador;
+      } else if(contador > seg && k == 1){
+        seg = contador;
         segRepetida = fArrPal[i];
-      } else if(contador > max && k == 2){
-        max = contador;
+      } else if(contador > ter && k == 2){
+        ter = contador;
         terRepetida = fArrPal[i];
       }
 
@@ -65,26 +58,19 @@ void masRepetido(int fpalabras, const string *fArrPal){
     k++;
   }
 
-
-
-   if (masRepetida != "") {
+  if (masRepetida != "") {
     cout << "La palabra más repetida es: " << masRepetida << " (" << max << " veces)" << endl;
-  } else {
-    cout << "No hay palabras repetidas." << endl;
-  }
-  if (segRepetida != "") {
-    cout << "La segunda palabra más repetida es: " << segRepetida << endl;
-  }
-  if (terRepetida != "") {
-    cout << "La tercera palabra más repetida es: " << terRepetida << endl;
-  }
-
+  } if (segRepetida != "" && segRepetida != masRepetida) {
+    cout << "La segunda palabra más repetida es: " << segRepetida << " (" << seg << " veces)" << endl;
+  } if (terRepetida != "" && terRepetida != masRepetida && terRepetida != segRepetida) {
+    cout << "La tercera palabra más repetida es: " << terRepetida << " (" << ter << " veces)"  << endl;
+  } 
 
 }
 
 int main(void){
 
-  string frase = "Esta oracion se repite mucho, por lo cual la palabra que mas se repite es 'repite'. Repite la frase y entenderas. La repetitividad existe.";
+  string frase = "Esta oracion si se repite mucho, por lo cual la palabra que si mas se repite es 'repite'. Repite la frase y entenderas. La repetitividad existe.";
 
   int letras = 0, palabras = 0, oraciones = 0, parrafos = 1;
   double promPal = 0; bool aux;
