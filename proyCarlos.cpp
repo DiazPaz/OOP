@@ -12,7 +12,7 @@ Implemente las funciones:
 2. contar cuantos para cada edad (en rangos de 3 años) (10 pts) ----OK
 3. contar cuantos por rendimiento académico (10) ----OK
 4. contar cuantos que si toman notas (10) ----OK
-5. reportar si hay relación entre tomar notas y el logro en calificaciones (10) 
+5. reportar si hay relación entre tomar notas y el logro en calificaciones (10) ----OK
 6. reportar si las horas que duermen tiene relación con el logro en calificaciones (10) ----OK*/
 
 int main(void){
