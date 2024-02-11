@@ -165,13 +165,7 @@ int main(void){
                 archOut << apuntesCalificaciones[i][j] << "\t\t\t";
             }
             archOut << endl;
-        } // Reporte de cuantos alumnos toman apuntes por calificacion 
-        /* 
-        Excellent:
-        x alumnos "si" tomaban apuntes
-        y alumnos "no" tomaban apuntes
-        z alumnos "a veces" tomaban apuntes
-         */
+        } 
         for(int i = 0; i < (sizeof(categorias)/sizeof(categorias[0])); i++){
             archOut << categorias[i] << endl;
             apuntesYes = 0; apuntesNo = 0; apuntesSome = 0; 
@@ -188,8 +182,7 @@ int main(void){
             archOut << "-> " << apuntesYes << " alumnos " << arrApuntes[0] << " tomaban apuntes. " << endl;
             archOut << "-> " << apuntesNo << " alumnos " << arrApuntes[1] << " tomaban apuntes. " << endl;
             archOut << "-> " << apuntesSome << " alumnos " << arrApuntes[2] << " tomaban apuntes. \n" << endl;
-        }
-        archOut << "------------------------------" << endl;
+        } archOut << "------------------------------" << endl;
         
     } else {
         cout << "Archivo no encontrado. \n";
