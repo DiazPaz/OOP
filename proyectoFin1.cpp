@@ -1,136 +1,160 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <fstream>
 
 using namespace std;
 
-/* Cree un programa que lea texto de un archivo (10 pts) 
-y lo analice, generando un archivo llamado Reporte.txt (10 pts).
-Deberá pedir al usuario el nombre del archivo .txt (10 pts)
+/* Cree un programa que lea texto de un archivo (10 pts) ----OK
+y lo analice, generando un archivo llamado Reporte.txt (10 pts). ----OK
+Deberá pedir al usuario el nombre del archivo .txt (10 pts) ----OK
 Implemente las funciones: (10 pts c/u)
 1. contar la cantidad de palabras ----OK
 2. contar oraciones ----OK
 3. contar párrafos ----OK
 4. calcular la longitud promedio de las palabras ----OK
-5. identificar las 3 palabras más comunes ----OK */
-
-void coutLista(int fpalabras, const string *fArrPal){
-  for(int i = 0; i < fpalabras; i++){
-    cout << "\t" << fArrPal[i] << "\n";
-  }
-}
-
-void masRepetido(int fpalabras, const string *fArrPal){
-  int max = 0, seg = 0, ter = 0, j, k = 0, contador;
-  string masRepetida = "", segRepetida = "", terRepetida = "";
-  while(k < 3){
-    for(int i = 0; i < fpalabras; i++){
-      contador = 1;
-      if(k == 1 && masRepetida == fArrPal[i]){
-        i++;
-      } else if(k == 2 && segRepetida == fArrPal[i] || masRepetida == fArrPal[i]){
-        i++;
-      }
-      for(j = i + 1; j < fpalabras; j++){
-        string lowerJ = fArrPal[j], lowerI = fArrPal[i];
-        for(char &c: lowerI){
-          c = tolower(c);
-        }
-        for(char &c: lowerJ){
-          c = tolower(c);
-        }
-        if(lowerI == lowerJ){
-          contador++;
-        }
-      }
-
-      if(contador > max && k == 0){
-        max = contador;
-        masRepetida = fArrPal[i];
-      } else if(contador > seg && k == 1){
-        seg = contador;
-        segRepetida = fArrPal[i];
-      } else if(contador > ter && k == 2){
-        ter = contador;
-        terRepetida = fArrPal[i];
-      }
-
-    }
-    k++;
-  }
-
-  if (masRepetida != "") {
-    cout << "La palabra más repetida es: " << masRepetida << " (" << max << " veces)" << endl;
-  } if (segRepetida != "" && segRepetida != masRepetida) {
-    cout << "La segunda palabra más repetida es: " << segRepetida << " (" << seg << " veces)" << endl;
-  } if (terRepetida != "" && terRepetida != masRepetida && terRepetida != segRepetida) {
-    cout << "La tercera palabra más repetida es: " << terRepetida << " (" << ter << " veces)"  << endl;
-  } 
-
-}
+5. identificar las 3 palabras más comunes ----OK  */
 
 int main(void){
-
-  string frase = "Esta oracion si se repite mucho, por lo cual la palabra que si mas se repite es 'repite'. Repite la frase y entenderas. La repetitividad existe.";
-
-  int letras = 0, palabras = 0, oraciones = 0, parrafos = 1;
+  
+  int letras = 0, palabras = 0, oraciones = 0, parrafos = 0, max = 0, seg = 0, ter = 0, j, k = 0, contador;
+  string frase, masRepetida = "", segRepetida = "", terRepetida = "";
   double promPal = 0; bool aux;
+  vector <string> lineas; 
 
-  for(int i = 0; i < frase.length(); i++){
-    // conteo de palabras
-    aux = false;
-    while(isalpha(frase[i])){
-      aux = true;
-      letras++;
-      i++;
-    }
-    if(aux == true){
-      palabras++;
-    }
+  // Deberá pedir al usuario el nombre del archivo .txt (10 pts) ----OK
+  ifstream inArch;
+  ofstream outArch;
+  string archivo; 
+  cout << "Dame el nombre del archivo (.txt): "; getline(cin, archivo); 
 
-    // conteo de oraciones
-    if(frase[i] == '.'){
-      oraciones++;
-    }
+  inArch.open(archivo); 
 
-    // conteo de parrafos
-    if(frase[i] == '\n'){
-      parrafos++;
-    }
-  }
+  if(inArch){
 
-  string arrPal[palabras]; int k = 0, j = 0;
-  for (int i = 0; i < frase.length(); i++) {
-    // Saltar los caracteres no alfabéticos
-    while (i < frase.length() && !isalpha(frase[i])) {
-      i++;
+    // y lo analice, generando un archivo llamado Reporte.txt (10 pts). ----OK
+    outArch.open("Reporte.txt");
+
+    while(getline(inArch, frase)){
+      lineas.push_back(frase);
+    } 
+
+    int k = 0;
+    vector<string> vecPal; 
+
+    // Cree un programa que lea texto de un archivo (10 pts) ----OK
+    // Almacenar el texto palabra a palabra en un vector
+    for(int i = 0; i < lineas.size(); i++){
+      int j = 0;
+      while(j < lineas[i].length()){
+        
+        // Saltar caracteres no alfabéticos
+        while(j < lineas[i].length() && !isalpha(lineas[i][j]) && lineas[i][j] != '-'){
+          
+          // 2. contar oraciones ----OK
+          if(lineas[i][j] == '.'){
+            oraciones++;
+          }
+
+          // 3. contar párrafos ----OK
+          if(lineas[i][j] == '\t'){
+            parrafos++;
+          }
+          j++;
+        }
+
+        // Encontrar el final de la palabra
+        k = j;
+        while(k < lineas[i].length() && (isalpha(lineas[i][k]) || lineas[i][k] == '-')){
+          if(isalpha(lineas[i][k])){
+            letras++;
+          }
+          k++;
+        }
+
+        // Almacenar la palabra en vecPal
+        if(j < k){
+          vecPal.push_back(lineas[i].substr(j, k - j));
+        }
+
+        // Saltar el resto de la palabra
+        j = k;
+      }
     }
-    // Encontrar el final de la palabra
-    j = i;
-    while (j < frase.length() && isalpha(frase[j])) {
-      j++;
-    }
-    // Almacenar la palabra en repetidas
-    if (i < j) {
-      arrPal[k] = frase.substr(i, j - i);
+    
+    // 1. contar la cantidad de palabras ----OK 
+    int palabras  = vecPal.size();
+
+    // 4. calcular la longitud promedio de las palabras ----OK
+    promPal = (letras*1.0)/palabras;
+
+    //5. identificar las 3 palabras más comunes ----OK  */
+    k = 0; 
+    while(k < 3){
+      
+      for(int i = 0; i < palabras; i++){
+
+        contador = 1;
+
+        // Evitar que la palabra anterior más repetida no se repita
+        if(k == 1 && masRepetida == vecPal[i]){
+          i++;
+        } else if(k == 2 && segRepetida == vecPal[i] || masRepetida == vecPal[i]){
+          i++;
+        }
+
+        // Hacer minúsculas a las palabras del vector y compararlas
+        for(j = i + 1; j < palabras; j++){
+          string lowerJ = vecPal[j], lowerI = vecPal[i];
+          for(char &c: lowerI){
+            c = tolower(c);
+          }
+          for(char &c: lowerJ){
+            c = tolower(c);
+          }
+          if(lowerI == lowerJ){
+            contador++;
+          }
+        }
+
+        // contar la cantidad de veces que se repiten las palabras más repetidas
+        if(contador > max && k == 0){
+          max = contador;
+          masRepetida = vecPal[i];
+        } else if(contador > seg && k == 1){
+          seg = contador;
+          segRepetida = vecPal[i];
+        } else if(contador > ter && k == 2){
+          ter = contador;
+          terRepetida = vecPal[i];
+        }
+
+      }
       k++;
     }
-    // Saltar el resto de la palabra
-    i = j - 1;
+
+    outArch << "Letras: " << letras << "\n";
+    outArch << "Palabras: " << palabras << "\n";
+    outArch << "Oraciones: " << oraciones << "\n";
+    outArch << "Parrafos: " << parrafos << "\n";
+    outArch << "Longitud promedio de palabras: " << promPal << "\n\n";
+    if (masRepetida != "") {
+      outArch << "La palabra más repetida es: " << masRepetida << " (" << max << " veces)" << endl;
+    } if (segRepetida != "" && segRepetida != masRepetida) {
+      outArch << "La segunda palabra más repetida es: " << segRepetida << " (" << seg << " veces)" << endl;
+    } if (terRepetida != "" && terRepetida != masRepetida && terRepetida != segRepetida) {
+      outArch << "La tercera palabra más repetida es: " << terRepetida << " (" << ter << " veces)";
+    } 
+
+    inArch.close();
+    outArch.close(); 
+  
+  } else {
+  
+    cout << "\nArchivo no encontrado\n";
+  
   }
-
-  // promedio de longitud por palabra
-  promPal = (letras*1.0)/palabras;
-
-  cout << "Letras: " << letras << "\n";
-  cout << "Palabras: " << palabras << "\n";
-  cout << "Oraciones: " << oraciones << "\n";
-  cout << "Parrafos: " << parrafos << "\n";
-  cout << "Longitud promedio de palabras: " << promPal << "\n";
-  cout << "Str: " << endl;
-  coutLista(palabras, arrPal);
-  cout << endl;
-  masRepetido(palabras, arrPal);
-
-  //getchar();
+  
   return 0;
+
 }

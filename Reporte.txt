@@ -1,0 +1,9 @@
+Letras: 1083
+Palabras: 187
+Oraciones: 9
+Parrafos: 3
+Longitud promedio de palabras: 5.79144
+
+La palabra más repetida es: the (12 veces)
+La segunda palabra más repetida es: Emotional (11 veces)
+La tercera palabra más repetida es: and (10 veces)
