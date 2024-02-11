@@ -1,93 +1,112 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
+
+enum class Gender { Male, Female };
+enum class Performance { Excellent, Good, Average, BelowAverage };
+
+void processLine(const std::string& line, int& male, int& female, int& men, int& may, int& excel, int& good, int& ave, int& belAve) {
+    Gender gender = Gender::Male; // Default value
+    int age = 0;
+    Performance performance = Performance::Excellent; // Default value
+
+    size_t j = 0;
+    while (j < line.length() && line[j] != '\t') {
+        ++j;
+    }
+
+    if (j < line.length()) {
+        age = std::stoi(line.substr(0, j));
+
+        size_t k = j + 1;
+        while (k < line.length() && line[k] != '\t') {
+            ++k;
+        }
+
+        if (k < line.length()) {
+            gender = (line.substr(j + 1, k - j - 1) == "Male") ? Gender::Male : Gender::Female;
+
+            size_t m = k + 1;
+            while (m < line.length() && line[m] != '\t') {
+                ++m;
+            }
+
+            if (m < line.length()) {
+                performance = (line.substr(k + 1, m - k - 1) == "Excellent") ? Performance::Excellent :
+                              (line.substr(k + 1, m - k - 1) == "Good") ? Performance::Good :
+                              (line.substr(k + 1, m - k - 1) == "Average") ? Performance::Average :
+                              Performance::BelowAverage;
+
+                // Incrementar contadores según el género, edad y rendimiento académico
+                if (gender == Gender::Male) {
+                    ++male;
+                } else {
+                    ++female;
+                }
+
+                if (age <= 22) {
+                    ++men;
+                } else {
+                    ++may;
+                }
+
+                switch (performance) {
+                    case Performance::Excellent:
+                        ++excel;
+                        break;
+                    case Performance::Good:
+                        ++good;
+                        break;
+                    case Performance::Average:
+                        ++ave;
+                        break;
+                    case Performance::BelowAverage:
+                        ++belAve;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+}
 
 int main() {
-    int max = 0, seg = 0, ter = 0, j, k = 0, contador, palabras = 0;
-    bool aux;
-    std::string masRepetida = "", segRepetida = "", terRepetida = "";
-    std::ifstream inArch("archivo.txt");
-    
-    if (!inArch.is_open()) {
+    std::ifstream inFile("resultados.txt");
+    std::ofstream outFile("Reporte.txt");
+
+    if (inFile.is_open() && outFile.is_open()) {
+        std::string line;
+        std::vector<std::string> lines;
+
+        while (std::getline(inFile, line)) {
+            lines.push_back(line);
+        }
+
+        int male = 0, female = 0, men = 0, may = 0, excel = 0, good = 0, ave = 0, belAve = 0;
+
+        for (const auto& currentLine : lines) {
+            processLine(currentLine, male, female, men, may, excel, good, ave, belAve);
+        }
+
+        // Escribir resultados en el archivo
+        outFile << "Male: " << male << std::endl;
+        outFile << "Female: " << female << std::endl;
+        outFile << "Men: " << men << std::endl;
+        outFile << "May: " << may << std::endl;
+        outFile << "Excellent: " << excel << std::endl;
+        outFile << "Good: " << good << std::endl;
+        outFile << "Average: " << ave << std::endl;
+        outFile << "Below Average: " << belAve << std::endl;
+
+        std::cout << "Proceso completado. Resultados escritos en Reporte.txt" << std::endl;
+
+        // Cerrar archivos
+        inFile.close();
+        outFile.close();
+    } else {
         std::cerr << "Error al abrir el archivo." << std::endl;
-        return 1;
     }
-
-    std::vector<std::string> lineas;
-    std::string frase;
-
-    while (getline(inArch, frase)) {
-        lineas.push_back(frase);
-    }
-
-    // Ahora 'lineas' contiene todas las líneas del archivo.
-
-    // Puedes hacer algo con el contenido almacenado en 'lineas', por ejemplo, imprimirlo:
-    for (int i = 0; i < lineas.size(); i++) {
-        std::cout << lineas[i] << std::endl;
-    }
-
-    for(int i = 0; i < frase.length(); i++){
-      // conteo de palabras
-      aux = false;
-      while(isalpha(frase[i])){
-        aux = true;
-        i++;
-      }
-      if(aux == true){
-        palabras++;
-      }
-
-    }
-
-
-  while(k < 3){
-    for(int i = 0; i < lineas.size(); i++){
-      contador = 1;
-      if(k == 1 && masRepetida == lineas[i]){
-        i++;
-      } else if(k == 2 && segRepetida == lineas[i] || masRepetida == lineas[i]){
-        i++;
-      }
-      for(j = i + 1; j < palabras; j++){
-        std::string lowerJ = lineas[j], lowerI = lineas[i];
-        for(char &c: lowerI){
-          c = tolower(c);
-        }
-        for(char &c: lowerJ){
-          c = tolower(c);
-        }
-        if(lowerI == lowerJ){
-          contador++;
-        }
-      }
-
-      if(contador > max && k == 0){
-        max = contador;
-        masRepetida = lineas[i];
-      } else if(contador > seg && k == 1){
-        seg = contador;
-        segRepetida = lineas[i];
-      } else if(contador > ter && k == 2){
-        ter = contador;
-        terRepetida = lineas[i];
-      }
-
-    }
-    k++;
-  }
-
-  if (masRepetida != "") {
-    std::cout << "La palabra más repetida es: " << masRepetida << " (" << max << " veces)" << std::endl;
-  } if (segRepetida != "" && segRepetida != masRepetida) {
-    std::cout << "La segunda palabra más repetida es: " << segRepetida << " (" << seg << " veces)" << std::endl;
-  } if (terRepetida != "" && terRepetida != masRepetida && terRepetida != segRepetida) {
-    std::cout << "La tercera palabra más repetida es: " << terRepetida << " (" << ter << " veces)"  << std::endl;
-  }
-    
-
-    inArch.close(); // No olvides cerrar el archivo cuando hayas terminado de usarlo.
 
     return 0;
 }
