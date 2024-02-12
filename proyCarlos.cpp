@@ -125,6 +125,7 @@ int main(void){
         for(int i = 0; i < rendimientos.size(); i++){
             archOut << categorias[i] << " (" << rendimientos[i] << " alumnos)" << endl;
         }
+        
         archOut << "\n----------APUNTES------------" << endl;
         vector<int> vecApuntes = {apuntesYes, apuntesNo, apuntesSome};
         const string arrApuntes[3] = {"si", "no", "a veces"};
@@ -185,7 +186,7 @@ int main(void){
         } archOut << "------------------------------" << endl;
         
     } else {
-        cout << "Archivo no encontrado. \n";
+        cout << "Archivo no existente. \n";
     }
 
     return 0; 
