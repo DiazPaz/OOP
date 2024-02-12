@@ -10,7 +10,6 @@ y lo analice, generando un archivo llamado Reporte.txt (10 pts). ----OK
 Deberá pedir al usuario el nombre del archivo .txt (10 pts) ----OK
 Implemente las funciones: (10 pts c/u)
 1. contar la cantidad de palabras ----OK
-
 2. contar oraciones ----OK
 3. contar párrafos ----OK
 4. calcular la longitud promedio de las palabras ----OK
@@ -62,6 +61,7 @@ int main(void){
             parrafos++;
           }
           j++;
+          
         }
 
         // Encontrar el final de la palabra
