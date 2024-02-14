@@ -1,112 +1,180 @@
 #include <iostream>
+#include <string>
 #include <fstream>
-#include <vector>
 
-enum class Gender { Male, Female };
-enum class Performance { Excellent, Good, Average, BelowAverage };
+using namespace std;
 
-void processLine(const std::string& line, int& male, int& female, int& men, int& may, int& excel, int& good, int& ave, int& belAve) {
-    Gender gender = Gender::Male; // Default value
-    int age = 0;
-    Performance performance = Performance::Excellent; // Default value
+/* Cree un programa que lea texto de un archivo (10 pts) ----OK
+y lo analice, generando un archivo llamado Reporte.txt (10 pts). ----OK
+Deberá pedir al usuario el nombre del archivo .txt (10 pts) ----OK
+Implemente las funciones: (10 pts c/u)
+1. contar la cantidad de palabras ----OK
+2. contar oraciones ----OK
+3. contar párrafos ----OK
+4. calcular la longitud promedio de las palabras ----OK
+5. identificar las 3 palabras más comunes ----OK  */
 
-    size_t j = 0;
-    while (j < line.length() && line[j] != '\t') {
-        ++j;
-    }
+int main(void){
 
-    if (j < line.length()) {
-        age = std::stoi(line.substr(0, j));
 
-        size_t k = j + 1;
-        while (k < line.length() && line[k] != '\t') {
-            ++k;
-        }
+  int letras = 0, palabras = 0, oraciones = 0, parrafos = 0, max = 0, seg = 0, ter = 0, j, k = 0, contador;
+  string frase, masRepetida = "", segRepetida = "", terRepetida = "";
+  double promPal = 0; bool aux;
 
-        if (k < line.length()) {
-            gender = (line.substr(j + 1, k - j - 1) == "Male") ? Gender::Male : Gender::Female;
+  int largoArr = 16;
+  string linea; 
+  string arrLineas[largoArr];
 
-            size_t m = k + 1;
-            while (m < line.length() && line[m] != '\t') {
-                ++m;
+  // Deberá pedir al usuario el nombre del archivo .txt (10 pts) ----OK
+  ifstream inArch;
+  ofstream outArch;
+  string archivo; 
+  cout << "Dame el nombre del archivo (.txt): "; getline(cin, archivo); 
+
+  inArch.open(archivo); 
+
+  if(inArch){
+
+    // y lo analice, generando un archivo llamado Reporte.txt (10 pts). ----OK
+    outArch.open("Reporte.txt");
+
+    int x = 0; 
+    while(!inArch.eof()){
+      
+      getline(inArch, linea);
+      if(x < 20){
+        arrLineas[x] = linea; 
+        x++;
+      } 
+
+    } 
+
+    int k = 0;
+
+    string arrPal[200];
+    int contadorArrPal = 0; 
+
+    // Cree un programa que lea texto de un archivo (10 pts) ----OK
+    // Almacenar el texto palabra a palabra en un vector
+    for(int i = 0; i < largoArr; i++){
+      int j = 0;
+      while(j < arrLineas[i].length()){
+        
+        // Saltar caracteres no alfabéticos
+        while(j < arrLineas[i].length() && !isalpha(arrLineas[i][j]) && arrLineas[i][j] != '-'){
+          
+            // 2. contar oraciones ----OK
+            if(arrLineas[i][j] == '.'){
+                oraciones++;
             }
 
-            if (m < line.length()) {
-                performance = (line.substr(k + 1, m - k - 1) == "Excellent") ? Performance::Excellent :
-                              (line.substr(k + 1, m - k - 1) == "Good") ? Performance::Good :
-                              (line.substr(k + 1, m - k - 1) == "Average") ? Performance::Average :
-                              Performance::BelowAverage;
-
-                // Incrementar contadores según el género, edad y rendimiento académico
-                if (gender == Gender::Male) {
-                    ++male;
-                } else {
-                    ++female;
-                }
-
-                if (age <= 22) {
-                    ++men;
-                } else {
-                    ++may;
-                }
-
-                switch (performance) {
-                    case Performance::Excellent:
-                        ++excel;
-                        break;
-                    case Performance::Good:
-                        ++good;
-                        break;
-                    case Performance::Average:
-                        ++ave;
-                        break;
-                    case Performance::BelowAverage:
-                        ++belAve;
-                        break;
-                    default:
-                        break;
-                }
+            // 3. contar párrafos ----OK
+            if(arrLineas[i][j] == '\t'){
+                parrafos++;
             }
-        }
-    }
-}
-
-int main() {
-    std::ifstream inFile("resultados.txt");
-    std::ofstream outFile("Reporte.txt");
-
-    if (inFile.is_open() && outFile.is_open()) {
-        std::string line;
-        std::vector<std::string> lines;
-
-        while (std::getline(inFile, line)) {
-            lines.push_back(line);
+            j++;
+          
         }
 
-        int male = 0, female = 0, men = 0, may = 0, excel = 0, good = 0, ave = 0, belAve = 0;
+        // Encontrar el final de la palabra
+        k = j;
+        while(k < arrLineas[i].length() && (isalpha(arrLineas[i][k])) || arrLineas[i][k] == '-'){
 
-        for (const auto& currentLine : lines) {
-            processLine(currentLine, male, female, men, may, excel, good, ave, belAve);
+          if(isalpha(arrLineas[i][k])){
+            letras++;
+          }
+          k++;
+        
         }
 
-        // Escribir resultados en el archivo
-        outFile << "Male: " << male << std::endl;
-        outFile << "Female: " << female << std::endl;
-        outFile << "Men: " << men << std::endl;
-        outFile << "May: " << may << std::endl;
-        outFile << "Excellent: " << excel << std::endl;
-        outFile << "Good: " << good << std::endl;
-        outFile << "Average: " << ave << std::endl;
-        outFile << "Below Average: " << belAve << std::endl;
+        // Almacenar la palabra en vecPal
+        if(j < k){
+          
+          arrPal[contadorArrPal] = arrLineas[i].substr(j, k - j);
+          contadorArrPal++;
 
-        std::cout << "Proceso completado. Resultados escritos en Reporte.txt" << std::endl;
+        }
 
-        // Cerrar archivos
-        inFile.close();
-        outFile.close();
-    } else {
-        std::cerr << "Error al abrir el archivo." << std::endl;
+        // Saltar el resto de la palabra
+        j = k;
+      }
     }
 
-    return 0;
+    // 1. contar la cantidad de palabras ----OK 
+    palabras = contadorArrPal;
+
+    // 4. calcular la longitud promedio de las palabras ----OK
+    promPal = (letras*1.0)/palabras;
+
+    //5. identificar las 3 palabras más comunes ----OK  
+    k = 0; 
+    while(k < 3){
+      
+      for(int i = 0; i < palabras; i++){
+
+        contador = 1;
+
+        // Evitar que la palabra anterior más repetida no se repita
+        if(k == 1 && masRepetida == arrPal[i]){
+          i++;
+        } else if(k == 2 && segRepetida == arrPal[i] || masRepetida == arrPal[i]){
+          i++;
+        }
+
+        // Hacer minúsculas a las palabras del vector y compararlas
+        for(j = i + 1; j < palabras; j++){
+          string lowerJ = arrPal[j], lowerI = arrPal[i];
+          for(char &c: lowerI){
+            c = tolower(c);
+          }
+          for(char &c: lowerJ){
+            c = tolower(c);
+          }
+          if(lowerI == lowerJ){
+            contador++;
+          }
+        }
+
+        // contar la cantidad de veces que se repiten las palabras más repetidas
+        if(contador > max && k == 0){
+          max = contador;
+          masRepetida = arrPal[i];
+        } else if(contador > seg && k == 1){
+          seg = contador;
+          segRepetida = arrPal[i];
+        } else if(contador > ter && k == 2){
+          ter = contador;
+          terRepetida = arrPal[i];
+        }
+
+      }
+      k++;
+    }
+
+    // Impresión de lo requerido
+    outArch << "Letras: " << letras << "\n";
+    outArch << "Palabras: " << palabras << "\n";
+    outArch << "Oraciones: " << oraciones << "\n";
+    outArch << "Parrafos: " << parrafos << "\n";
+    outArch << "Longitud promedio de palabras: " << promPal << "\n\n";
+
+    if (masRepetida != "") {
+      outArch << "La palabra más repetida es: " << masRepetida << " (" << max << " veces)" << endl;
+    } if (segRepetida != "" && segRepetida != masRepetida) {
+      outArch << "La segunda palabra más repetida es: " << segRepetida << " (" << seg << " veces)" << endl;
+    } if (terRepetida != "" && terRepetida != masRepetida && terRepetida != segRepetida) {
+      outArch << "La tercera palabra más repetida es: " << terRepetida << " (" << ter << " veces)";
+    } 
+
+    inArch.close();
+    outArch.close(); 
+  
+  } else {
+  
+    cout << "\nArchivo no encontrado\n";
+  
+  }
+  
+  return 0;
+
 }
