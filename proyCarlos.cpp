@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <vector>
 
 using namespace std; 
 
@@ -17,8 +16,8 @@ Implemente las funciones:
 
 int main(void){
 
+    const int cantLineas = 99;
     string linea; 
-    vector<string> lineas; 
     ifstream archIn("resultados.txt"); 
     ofstream archOut; 
 
@@ -26,10 +25,20 @@ int main(void){
 
         archOut.open("Reporte.txt");
 
+        string arrLineas[cantLineas]; 
+        int i = 0;
+
+        // Declaramos línea por línea del .txt en el arreglo
         while(!archIn.eof()){
+            
             getline(archIn, linea);
-            lineas.push_back(linea);
-        } 
+
+            if(i<99){
+                arrLineas[i] = linea; 
+                i++; 
+            }
+            
+        }  
 
         string genero = ""; bool gen; int male = 0, female = 0;
 
@@ -39,25 +48,30 @@ int main(void){
 
         string apuntes = ""; bool apunt; int apuntesYes = 0, apuntesNo = 0, apuntesSome = 0; 
 
-        string apuntesCalificaciones[lineas.size()][2]; bool apuCalif; 
+        string apuntesCalificaciones[cantLineas][2]; bool apuCalif; 
 
-        string rendSueno[lineas.size()][2]; bool reSu; int contadorTabs;
+        string rendSueno[cantLineas][2]; bool reSu; int contadorTabs;
 
-        for(int i = 0; i < lineas.size(); i++){
-            gen = true; ed = true; rend = true; apunt = true; reSu = true; 
-            for(int j = 0; j < lineas[i].length(); j++){
-                if(lineas[i][j] == '\t'){
-                    for(int k = j + 1; k < lineas[i].length(); k++){
-                        if(lineas[i][k] == '\t' && gen == true){
-                            genero = lineas[i].substr(j+1, k-j-1);
+        // inicializamos ciclo FOR para análisis línea por línea del .txt
+        for(int i = 0; i < cantLineas; i++){
+            // banderas que avisan cuando encuentran un valor en específico
+            gen = true; ed = true; rend = true; apunt = true; reSu = true;
+            // inicializamos ciclo FOR para poder detectar el primer '\t'
+            for(int j = 0; j < arrLineas[i].length(); j++){
+                if(arrLineas[i][j] == '\t'){
+                    // inicializamos ciclo FOR para poder detectar el segundo '\t' y capturar el genero
+                    for(int k = j + 1; k < arrLineas[i].length(); k++){
+                        if(arrLineas[i][k] == '\t' && gen == true){
+                            genero = arrLineas[i].substr(j+1, k-j-1);
                             if(genero == "Male")
                                 male++;
                             if(genero == "Female")
                                 female++; 
                             gen = false; 
-                            for(int m = k + 1; m < lineas[i].length(); m++){
-                                if(lineas[i][m] == '\t' && rend == true){
-                                    rendimiento = lineas[i].substr(k+1, m-k-1);
+                            // inicializamos ciclo FOR para poder detectar el tercer '\t' y capturar el rendimiento
+                            for(int m = k + 1; m < arrLineas[i].length(); m++){
+                                if(arrLineas[i][m] == '\t' && rend == true){
+                                    rendimiento = arrLineas[i].substr(k+1, m-k-1);
                                     apuntesCalificaciones[i][0] = rendimiento; 
                                     rendSueno[i][0] = rendimiento;
                                     if(rendimiento == "Excellent")
@@ -69,9 +83,10 @@ int main(void){
                                     if(rendimiento == "Below average")
                                         belowAverage++; 
                                     rend = false; 
-                                    for(int n = m + 1; n < lineas[i].length(); n++){
-                                        if(lineas[i][n] == '\t' && apunt == true){
-                                            apuntes = lineas[i].substr(m+1, n-m-1);
+                                    // inicializamos ciclo FOR para poder detectar el tercer '\t' y capturar si los alumnos toman apuntes 
+                                    for(int n = m + 1; n < arrLineas[i].length(); n++){
+                                        if(arrLineas[i][n] == '\t' && apunt == true){
+                                            apuntes = arrLineas[i].substr(m+1, n-m-1);
                                             apuntesCalificaciones[i][1] = apuntes;
                                             if(apuntes == "Yes")
                                                 apuntesYes++;
@@ -81,13 +96,14 @@ int main(void){
                                                 apuntesSome++; 
                                             apunt = false;
                                             contadorTabs = 0; 
-                                            for(int l = n + 1; l < lineas[i].length(); l++){
-                                                if(lineas[i][l] == '\t'){
+                                            // inicializamos último ciclo FOR para poder detectar '\t' y en caso de que si contar 3 '\t' hasta llegar a la columna del registro de sueño
+                                            for(int l = n + 1; l < arrLineas[i].length(); l++){
+                                                if(arrLineas[i][l] == '\t'){
                                                     contadorTabs++; 
                                                     if(contadorTabs == 3){
-                                                        for(int o = l + 1; o < lineas[i].length(); o++){
-                                                            if(lineas[i][o] == '\t' && reSu == true){
-                                                                rendSueno[i][1] = lineas[i].substr(l+1, o-l-1);
+                                                        for(int o = l + 1; o < arrLineas[i].length(); o++){
+                                                            if(arrLineas[i][o] == '\t' && reSu == true){
+                                                                rendSueno[i][1] = arrLineas[i].substr(l+1, o-l-1);
                                                                 reSu = false; 
                                                             }
                                                         }
@@ -99,9 +115,10 @@ int main(void){
                                 }
                             }
                         }
-                    } 
+                    }
+                    // condicional que permite accionar un contador para las edades de los participantes 
                     if(ed == true){
-                        edad = stoi(lineas[i].substr(0,j));
+                        edad = stoi(arrLineas[i].substr(0,j));
                         if(edad <= 22)
                             men++;
                         if(edad > 22)
@@ -119,29 +136,31 @@ int main(void){
         archOut << "(20-22): " << men << " | " << "(23-25): " << may << endl;
 
         archOut << "\n----RENDIMIENTO ACADEMICO----" << endl;
-        vector<int> rendimientos = {excellent, good, average, belowAverage};
-        const string categorias[4] = {"Excellent", "Good", "Average", "Below average"};
+        const int cats = 4;
+        int rendimientos[cats] = {excellent, good, average, belowAverage};
+        const string categorias[cats] = {"Excellent", "Good", "Average", "Below average"};
         archOut << "Rendimiento académico: " << endl;
-        for(int i = 0; i < rendimientos.size(); i++){
+        for(int i = 0; i < cats; i++){
             archOut << categorias[i] << " (" << rendimientos[i] << " alumnos)" << endl;
         }
         
         archOut << "\n----------APUNTES------------" << endl;
-        vector<int> vecApuntes = {apuntesYes, apuntesNo, apuntesSome};
-        const string arrApuntes[3] = {"si", "no", "a veces"};
-        for(int i = 0; i < vecApuntes.size(); i++){
-            archOut << " -> " << vecApuntes[i] << " alumnos " << arrApuntes[i] << " toman apuntes. " << endl;
+        const int catsApuntes = 3; 
+        int arrAp[catsApuntes] = {apuntesYes, apuntesNo, apuntesSome};
+        const string arrApuntes[catsApuntes] = {"si", "no", "a veces"};
+        for(int i = 0; i < catsApuntes; i++){
+            archOut << " -> " << arrAp[i] << " alumnos " << arrApuntes[i] << " toman apuntes. " << endl;
         }
 
         archOut << "\n----------REPORTE 1-----------" << endl << "RENDIMIENTO" << "\t\t" << "HORAS DE SUEÑO" << endl << "- - - - - - - - - - - - - - -" << endl;
-        for(int i = 0; i < lineas.size(); i++){
+        for(int i = 0; i < cantLineas; i++){
             for(int j = 0; j < 2; j++){
                 archOut << rendSueno[i][j] << "\t\t\t";
             }
             archOut << endl;
         } archOut << "- - - - - - - - - - - - - - -" << endl;
         int masRepetido = 0; int max = 0; 
-        for(int i = 0; i < rendimientos.size(); i++){
+        for(int i = 0; i < cats; i++){
             if(rendimientos[i] > max){
                 max = rendimientos[i];
                 masRepetido = i; 
@@ -151,7 +170,7 @@ int main(void){
         archOut << "- - - - - - - - - - - - - - -" << endl;
         int suma = 0; 
         for(int a = 0; a < 4; a++){
-            for(int i = 0; i < lineas.size(); i++){
+            for(int i = 0; i < cantLineas; i++){
                 if(rendSueno[i][0] == categorias[a]){
                     suma += stoi(rendSueno[i][1]);
                 }
@@ -161,16 +180,16 @@ int main(void){
         archOut << "------------------------------" << endl;
         
         archOut << "\n----------REPORTE 2-----------" << endl << "RENDIMIENTO" << "\t\t" << "APUNTES" << endl << "- - - - - - - - - - - - - - -" << endl;
-        for(int i = 0; i < lineas.size(); i++){
+        for(int i = 0; i < cantLineas; i++){
             for(int j = 0; j < 2; j++){
                 archOut << apuntesCalificaciones[i][j] << "\t\t\t";
             }
             archOut << endl;
-        } 
-        for(int i = 0; i < (sizeof(categorias)/sizeof(categorias[0])); i++){
+        } archOut << endl; 
+        for(int i = 0; i < cats; i++){
             archOut << categorias[i] << endl;
             apuntesYes = 0; apuntesNo = 0; apuntesSome = 0; 
-            for(int j = 0; j < lineas.size(); j++){
+            for(int j = 0; j < cantLineas; j++){
                 if(apuntesCalificaciones[j][0] == categorias[i]){
                     if(apuntesCalificaciones[j][1] == "Yes")
                         apuntesYes++;
@@ -183,10 +202,14 @@ int main(void){
             archOut << "-> " << apuntesYes << " alumnos " << arrApuntes[0] << " tomaban apuntes. " << endl;
             archOut << "-> " << apuntesNo << " alumnos " << arrApuntes[1] << " tomaban apuntes. " << endl;
             archOut << "-> " << apuntesSome << " alumnos " << arrApuntes[2] << " tomaban apuntes. \n" << endl;
-        } archOut << "------------------------------" << endl;
+        } archOut << "------------------------------" << endl; 
         
+        archIn.close(); 
+
     } else {
+
         cout << "Archivo no existente. \n";
+        
     }
 
     return 0; 
