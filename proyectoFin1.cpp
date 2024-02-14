@@ -16,7 +16,6 @@ Implemente las funciones: (10 pts c/u)
 
 int main(void){
 
-
   int letras = 0, palabras = 0, oraciones = 0, parrafos = 0, max = 0, seg = 0, ter = 0, j, k = 0, contador;
   string frase, masRepetida = "", segRepetida = "", terRepetida = "";
   double promPal = 0; bool aux;
