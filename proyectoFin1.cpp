@@ -49,12 +49,11 @@ int main(void){
     } 
 
     int k = 0;
-
     string arrPal[200];
     int contadorArrPal = 0; 
 
     // Cree un programa que lea texto de un archivo (10 pts) ----OK
-    // Almacenar el texto palabra a palabra en un vector
+    // Almacenar el texto palabra a palabra en un arreglo
     for(int i = 0; i < largoArr; i++){
       int j = 0;
       while(j < arrLineas[i].length()){
@@ -120,7 +119,7 @@ int main(void){
           i++;
         }
 
-        // Hacer minúsculas a las palabras del vector y compararlas
+        // Hacer minúsculas a las palabras del arreglo y compararlas
         for(j = i + 1; j < palabras; j++){
           string lowerJ = arrPal[j], lowerI = arrPal[i];
           for(char &c: lowerI){
@@ -134,7 +133,7 @@ int main(void){
           }
         }
 
-        // contar la cantidad de veces que se repiten las palabras más repetidas
+        // contar la cantidad de veces que se repiten las palabras más repetidas y almacenarlas en sus variables respectivas
         if(contador > max && k == 0){
           max = contador;
           masRepetida = arrPal[i];
