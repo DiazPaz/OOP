@@ -8,7 +8,7 @@ class CtaBanc{
         void setSaldo(double);
         
         int getNumCta();
-        string getNombre();
+        string getNombre(); 
         double getSaldo();
 
         bool retira(double);
