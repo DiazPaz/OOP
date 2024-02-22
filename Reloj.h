@@ -2,6 +2,7 @@ class Reloj{
 
   public:
     Reloj();
+    Reloj(int, int);
     ~Reloj();
     void setHora(int);
     void setMinu(int);
@@ -18,6 +19,11 @@ class Reloj{
 Reloj :: Reloj(){
   hora = 0;
   minuto = 0;
+}
+
+Reloj::Reloj(int h, int m){
+  hora = h; 
+  minuto = m; 
 }
 
 void Reloj::setHora(int h){
