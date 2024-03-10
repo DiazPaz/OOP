@@ -4,47 +4,47 @@ class Salones{
 
     public:
 
-        Salon();
-        Salon(int, std::string, int, Computadora);
+        Salones();
+        Salones(int, std::string, int, Computadora);
 
-        void setIdSal(int ID) { id = ID; }
-        void setNameSal(std::string NAME) { name = NAME; }
-        void setCapacidadSal(int cap) { capacidad = cap; }
-        void setIdSal(Computadora comp) { computadora = comp; }
+        void setIdSal(int ID) { idSal = ID; }
+        void setNameSal(std::string NAME) { nameSal = NAME; }
+        void setCapacidadSal(int cap) { capacidadSal = cap; }
+        void setCompSal(Computadora comp) { compSal = comp; }
         
-        int getIdSal() { return id; }
-        std::string getNameSal() { return name; }
-        int getCapacidadSal() { return capacidad; }
-        Computadora getCompSal() { return computadora; }
+        int getIdSal() { return idSal; }
+        std::string getNameSal() { return nameSal; }
+        int getCapacidadSal() { return capacidadSal; }
+        Computadora getCompSal() { return compSal; }
 
         void muestraSal();
 
     private:
      
-        int id; 
-        std::string name; 
-        int capacidad; 
-        Computadora computadora; 
+        int idSal; 
+        std::string nameSal; 
+        int capacidadSal; 
+        Computadora compSal; 
 
 }; 
 
-Salones::Salon(){
-    id = 0; 
-    name = ""; 
-    capacidad = 0;  
+Salones::Salones(){
+    idSal = 0; 
+    nameSal = ""; 
+    capacidadSal = 0;  
     Computadora c;
 }
 
-Salones::Salon(int i, std::string n, int cap, Computadora comp){
-    id = i; 
-    name = n; 
-    capacidad = cap;  
-    computadora = comp;
+Salones::Salones(int i, std::string n, int cap, Computadora comp){
+    idSal = i; 
+    nameSal = n; 
+    capacidadSal = cap;  
+    compSal = comp;
 }
 
 void Salones::muestraSal(){
-    std::cout << "ID de Salon: " << id << "\n";
-    std::cout << "Nombre de Salon: " << name << "\n";
-    std::cout << "Capacidad de Salon: " << capacidad << "\n";
-    std::cout << "Computadora: " << "\n" << "  - Marca: " << computadora.getBrand() << "\n" << "  - OS: " << computadora.getOs() << "\n" <<"  - Ram: " << computadora.getRam() << "\n";
+    std::cout << "ID de Salon: " << idSal << "\n";
+    std::cout << "Nombre de Salon: " << nameSal << "\n";
+    std::cout << "Capacidad de Salon: " << capacidadSal << "\n";
+    std::cout << "Computadora: " << "\n" << "  - Marca: " << compSal.getBrand() << "\n" << "  - OS: " << compSal.getOs() << "\n" <<"  - Ram: " << compSal.getRam() << "\n";
 }

@@ -4,13 +4,16 @@ using namespace std;
 #include "Edificios.h"
 
 int main(void){
+    
+    Salones salon[20]; Laboratorios laboratorio[20]; Computadora c;
+    salon[0].setIdSal(1); salon[0].setNameSal("uno"); salon[0].setCapacidadSal(20); salon[1].setCompSal(c);
 
-    Computadora comp; 
-    Salones salon;
-    Laboratorios laboratorio;
+    salon[0].muestraSal();
 
-    int cantSal = 4, cantLabs = 6; int arrSal[10] = {}, arrLabs[10] = {10};
-    Edificio ed1(650794, "CUATRO", "David", cantSal, cantLabs, arrSal, arrLabs), ed2;
+    int cantSal = 4, cantLabs = 6; 
+    // En estos arreglos se almacenarán los IDs de los salones/laboratorios. 
+    int arrSal[10] = {}, arrLabs[10] = {10};
+    Edificio ed1(650794, "CUATRO", cantLabs, arrLabs, cantSal, arrSal, "David"), ed2;
 
     cout << ed1.getId() << endl;
     cout << ed1.getName() << endl;

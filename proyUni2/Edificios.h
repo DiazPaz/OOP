@@ -6,7 +6,7 @@ class Edificio{
     public: 
 
         Edificio(); 
-        Edificio(int, std::string, std::string, int, int, int arrSal[], int arrLabs[]);
+        Edificio(int idEdificio, std::string nombreEd, int cantLaboratorios, int arrLabs[], int cantSalones, int arrSal[], std::string nameResponsable);
 
         void setId(int ID) { id = ID; }
         void setName(std::string NAME) { name = NAME; }
@@ -51,7 +51,7 @@ Edificio::Edificio(){
     }
 }
 
-Edificio::Edificio(int ID, std::string NAME, std::string RESP, int CANTS, int CANTL, int arrSalones[10], int arrLaboratorios[10]){
+Edificio::Edificio(int ID, std::string NAME, int CANTL, int arrLaboratorios[10], int CANTS, int arrSalones[10], std::string RESP){
     id = ID; 
     name = NAME;
     responsable = RESP; 

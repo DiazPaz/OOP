@@ -5,17 +5,28 @@ class Computadora{
 
     public: 
         Computadora();
+
+        Computadora(std::string RAM, std::string MARCA, std::string SO, int ID)
+        {
+            ram = RAM; marca = MARCA; so = SO; idComputadora = ID; 
+        }
+
         std::string getRam();
         std::string getBrand();
         std::string getOs();
         void setRam(std::string);
         void setBrand(std::string);
         void setOs(std::string);
+        
+        void setIdComputadora(int id) { idComputadora = id; }
+        int getIdComputadora() { return idComputadora; }
 
     private: 
         std::string ram;
         std::string marca;
         std::string so;
+
+        int idComputadora; 
 
 };
 
@@ -23,6 +34,7 @@ Computadora::Computadora(){
     ram = "";
     marca = "";
     so = "";
+    idComputadora = 0; 
 }
 
 std::string Computadora::getRam(){
