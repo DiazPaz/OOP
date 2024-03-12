@@ -18,5 +18,10 @@ int main()
 
   cout << z;
 
+  char st[] = "ABCD";
+  for(int i = 0; st[i] != NULL; i++) {
+     cout << st[i] << *(st)+i << *(i+st) << i[st];
+  }
+
   return 0;
 }
