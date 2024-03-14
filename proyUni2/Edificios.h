@@ -34,6 +34,7 @@ class Edificio{
             std::string responsable; 
             int cantLabs = 0; 
             int cantSal = 0; 
+            // habrá una lista de 10 salones y 10 laboratorios por edifico
             int arrLabs[10] = {};
             int arrSal[10] = {};
 

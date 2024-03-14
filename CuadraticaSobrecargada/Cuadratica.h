@@ -5,7 +5,8 @@ public:
     Cuadratica operator+(Cuadratica);
     friend Cuadratica operator-(Cuadratica, Cuadratica);
     friend void operator+=(Cuadratica &c1, Cuadratica);
-    Cuadratica operator*(Cuadratica, int); 
+    Cuadratica operator*(int); 
+    friend void operator++(Cuadratica &c){ c.iCoefC++; }
 
   Cuadratica();
   Cuadratica(int, int, int);
@@ -33,7 +34,7 @@ bool Cuadratica::operator==(Cuadratica c){
         return false;
 }
 
-void Cuadratica::operator+=(Cuadratica &c1, Cuadratica c2){
+void operator+=(Cuadratica &c1, Cuadratica c2){
     c1.iCoefA += c2.iCoefA;
     c1.iCoefB += c2.iCoefB;
     c1.iCoefC += c2.iCoefC;

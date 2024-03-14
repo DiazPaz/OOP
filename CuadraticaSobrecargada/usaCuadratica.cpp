@@ -10,6 +10,8 @@ int main()
 
 {
 
+system("cls");
+
 int iA, iB, iC;
 
 Cuadratica ec1(5,3,2), ecRes;
@@ -37,6 +39,7 @@ cout << "Ecuación 2 :";
 ec2.muestra();
 
 // Usa la sobrecarga para hacer la suma
+ecRes = ec1 + ec2;
 
 cout << "Resultado :";
 
@@ -67,6 +70,7 @@ cout << "Ecuación 2 :" ;
 ec2.muestra();
 
 // Usa la sobrecarga para hacer la resta
+ecRes = ec1 - ec2;
 
 cout << "Resultado :";
 
@@ -93,6 +97,7 @@ cout << "Ecuación 1 :" ;
 ec1.muestra();
 
 // Usa la sobrecarga para hacer la multiplicación
+ecRes = ec1 * 2; 
 
 cout << "Resultado :";
 
@@ -118,7 +123,7 @@ cout << "Ecuación 2 :" ;
 
 ec2.muestra();
 
-if ( !(ec1 == ec2) )
+if ( ec1 == ec2 )
 
 cout << "Son iguales" << endl;
 
@@ -140,9 +145,9 @@ ec1.muestra();
 
 cout << "Ecuación 2 :" ;
 
-ec2.muestra();
+ec3.muestra();
 
-if (// agrega la comparación que hace falta)
+if ( ec1 == ec3)
 
 cout << "Son iguales" << endl;
 
@@ -165,6 +170,7 @@ cout << "Ecuación 2 :";
 ec2.muestra();
 
 // Usa la sobrecarga para hacer el +=
+ec1 += ec2; 
 
 cout << "Ecuación 1 :" ;
 
@@ -187,10 +193,7 @@ cout << "Ecuación 1 :" ;
 ec1.muestra();
 
 // Usa la sobrecarga para hacer el incremento
-
-cout << "Regresa :";
-
-ecRes.muestra();
+++ec1;
 
 cout << "Ecuación 1 :" ;
 
