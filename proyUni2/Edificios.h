@@ -74,14 +74,15 @@ bool Edificio::agregarLab(int ID){
 
     for(int i = 0; i < cont; i++){
         if(arrLabs[i] == ID)
-            return true; 
+            return false; 
     } 
     
     if(cont < 10){
         arrLabs[cont] = ID; 
     }
 
-    return false; 
+    cantLabs = cont+1; 
+    return true; 
         
 }
 
@@ -95,14 +96,15 @@ bool Edificio::agregarSal(int ID){
 
     for(int i = 0; i < cont; i++){
         if(arrSal[i] == ID)
-            return true; 
+            return false; 
     } 
     
     if(cont < 10){
         arrSal[cont] = ID; 
     }
 
-    return false; 
+    cantSal = cont+1; 
+    return true; 
         
 }
 

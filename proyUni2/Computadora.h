@@ -6,7 +6,7 @@ class Computadora{
     public: 
         Computadora();
 
-        Computadora(std::string RAM, std::string MARCA, std::string SO, int ID)
+        Computadora(int ID, std::string MARCA, std::string SO, std::string RAM)
         {
             ram = RAM; marca = MARCA; so = SO; idComputadora = ID; 
         }
