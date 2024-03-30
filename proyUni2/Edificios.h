@@ -20,6 +20,14 @@ class Edificio{
 
         int getArrLabs(int i) { return arrLabs[i]; }
         int getArrSal(int i) { return arrSal[i]; }
+        // void getArrLabs() { 
+        //     for(int i = 0; i < 10; i++)
+        //         cout << arrLabs[i] << " "; 
+        // }
+        // void getArrSal() { 
+        //     for(int i = 0; i < 10; i++)
+        //         cout << arrSal[i] << " "; 
+        // }
 
         bool agregarLab(int);
         bool agregarSal(int);
