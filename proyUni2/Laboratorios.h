@@ -46,5 +46,5 @@ void Laboratorios::muestraLab(){
     std::cout << "ID de Laboratorio: " << id << "\n";
     std::cout << "Nombre de Laboratorio: " << name << "\n";
     std::cout << "Capacidad de Laboratorio: " << capacidad << "\n";
-    std::cout << "Computadora: " << "\n" << "  - Marca: " << computadora.getBrand() << "\n" << "  - OS: " << computadora.getOs() << "\n" <<"  - Ram: " << computadora.getRam() << "\n";
+    std::cout << "Computadora: " << "\n" << "  - Marca: " << computadora.getBrand() << "\n" << "  - OS: " << computadora.getOs() << "\n" <<"  - Ram: " << computadora.getRam() << "\n"<<"  - ID: " << computadora.getIdComputadora() << "\n";
 }

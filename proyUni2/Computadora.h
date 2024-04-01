@@ -22,7 +22,7 @@ class Computadora{
         int getIdComputadora() { return idComputadora; }
 
         void muestraComputadora(){
-            std::cout << "Computadora: " << "\n" << "  - Marca: " << marca << "\n" << "  - OS: " << so << "\n" <<"  - Ram: " << ram<< "\n";
+            std::cout << "Computadora: " << "\n" << "  - Marca: " << marca << "\n" << "  - OS: " << so << "\n" <<"  - Ram: " << ram<< "\n"<<"  - ID: " << idComputadora<< "\n";
         }
 
     private: 

@@ -325,7 +325,8 @@ int main(void){
     char input; 
     do{
 
-        cout << "\na. Consulta de todos los laboratorios que están en la lista.\nb. Consulta de todos los salones que están en la lista.\nc. Consulta de todos los edificios que están en la lista.\nd. Consulta de todas las computadoras disponibles.\ne. Consulta de computadoras por edificio.\nf. Consulta por clave de computadora.\ng. Consulta la lista de labs y salones en las que se tiene una marca de computadora\nh. Terminar\n";
+        // system("cls");
+        cout << "\na. Consulta de todos los laboratorios que estan en la lista.\nb. Consulta de todos los salones que estan en la lista.\nc. Consulta de todos los edificios que estan en la lista.\nd. Consulta de todas las computadoras disponibles.\ne. Consulta de computadoras por edificio.\nf. Consulta por clave de computadora.\ng. Consulta la lista de labs y salones en las que se tiene una marca de computadora\nh. Terminar\n";
         cin >> input; 
         
         switch(input){
@@ -350,26 +351,98 @@ int main(void){
                 break; 
 
             case 'd': 
+
                 for(Laboratorios lab: laboratorio){
-                    cout << "ID de Computadora: " << lab.getCompLab().getIdComputadora() << endl;
-                    lab.getCompLab().muestraComputadora(); 
-                    cout << "Laboratorio correspondiente: "; cout << lab.getIdLab() << ", "; cout << lab.getNameLab() << endl;  
-                    cout << endl; 
+                    if(lab.getCompLab().getIdComputadora() != 0){
+                        cout << "ID de Computadora: " << lab.getCompLab().getIdComputadora() << endl;
+                        lab.getCompLab().muestraComputadora(); 
+                        cout << "Laboratorio correspondiente: "; cout << lab.getIdLab() << ", "; cout << lab.getNameLab() << endl;  
+                    }
+                    for(int i = 0; i < 4; i++){
+                        for(int j = 0; j < 10;j++){
+                            if(edificios[i].getArrLabs(j) == lab.getIdLab() && lab.getCompLab().getIdComputadora() != 0)
+                                cout << "Edificio correspondiente: " << edificios[i].getId() << ", " << edificios[i].getName() << endl;
+                        }
+                    }
+                cout << endl; 
                 }
-                cout << "=====================\n";
+                cout << "=====================\n\n";
                 for(Salones sal: salon){
-                    cout << "ID de Computadora: " << sal.getCompSal().getIdComputadora() << endl;
-                    sal.getCompSal().muestraComputadora(); 
-                    cout << "Salon correspondiente: "; cout << sal.getIdSal() << ", "; cout << sal.getNameSal() << endl;  
-                    cout << endl; 
+                    if(sal.getCompSal().getIdComputadora() != 0){
+                        cout << "ID de Computadora: " << sal.getCompSal().getIdComputadora() << endl;
+                        sal.getCompSal().muestraComputadora(); 
+                        cout << "Salon correspondiente: "; cout << sal.getIdSal() << ", "; cout << sal.getNameSal() << endl;  
+                    }
+                    for(int i = 0; i < 4; i++){
+                        for(int j = 0; j < 10;j++){
+                            if(edificios[i].getArrSal(j) == sal.getIdSal() && sal.getCompSal().getIdComputadora() != 0)
+                                cout << "Edificio correspondiente: " << edificios[i].getId() << ", " << edificios[i].getName() << endl;
+                        }
+                    }
+                cout << endl; 
                 }
-                
                 break; 
 
             case 'e': 
+                int idEdificio; 
+                do{
+                    cout << "ID de Edificio: "; cin >> idEdificio; 
+                    if(idEdificio < 1 || idEdificio > 4)
+                        cout << "ID no valido\n";
+                }while(idEdificio < 1 || idEdificio > 4); 
+                
+                for(int i = 0; i < 4; i++){
+                    if(idEdificio == edificios[i].getId()){
+
+                        for(int j = 0; j < edificios[i].getCantLabs(); j++){
+                            if(laboratorio[j].getCompLab().getIdComputadora() != 0){
+                                cout << "ID de Computadora: " << laboratorio[j].getCompLab().getIdComputadora() << endl;
+                                laboratorio[j].getCompLab().muestraComputadora(); 
+                                cout << "Laboratorio correspondiente: "; cout << laboratorio[j].getIdLab() << ", "; cout << laboratorio[j].getNameLab() << endl;  
+                            }
+                            cout << endl; 
+                        }
+                        
+                        for(int j = 0; j < edificios[i].getCantSal(); j++){
+                            if(salon[j].getCompSal().getIdComputadora() != 0){
+                                cout << "ID de Computadora: " << salon[j].getCompSal().getIdComputadora() << endl;
+                                salon[j].getCompSal().muestraComputadora(); 
+                                cout << "Salon correspondiente: "; cout << salon[j].getIdSal() << ", "; cout << salon[j].getNameSal() << endl;  
+                            }
+                            cout << endl; 
+                        }
+                    }
+                    cout << endl; 
+                }
                 break; 
 
             case 'f': 
+                int idComputadora; 
+                do{
+                    cout << "ID de Computadora: "; cin >> idComputadora; 
+                    if(idComputadora < 1 || idComputadora > 22)
+                        cout << "ID no valido\n";
+                }while(idComputadora < 1 || idComputadora > 22);
+
+                for(int j = 0; j < 10; j++){
+                    if(idComputadora == laboratorio[j].getCompLab().getIdComputadora()){
+                        laboratorio[j].muestraLab();
+                        for(int i = 0; i < 4; i++){
+                            for(int k = 0; k < edificios[i].getCantLabs(); k++){
+                                if(laboratorio[j].getIdLab() == edificios[i].getArrLabs(k)){
+                                    cout << "Edificio correspondiente: " << edificios[i].getId() << ", " << edificios[i].getName() << endl;
+                                }
+                            }
+                        } 
+                    }
+                } cout << endl; 
+                for(int j = 0; j < 10; j++){
+                    if(idComputadora == salon[j].getCompSal().getIdComputadora()){
+                        salon[j].muestraSal(); 
+                    }
+                } cout << endl; 
+                
+
                 break; 
 
             case 'g': 
