@@ -17,6 +17,6 @@
 17 Dell Linux 16
 18 HP Linux 8
 19 Apple MacOS 16
-20 HP Windwos 16
+20 HP Windows 16
 21 HP Windows 8
 22 Dell Windows 8

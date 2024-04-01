@@ -6,7 +6,7 @@ using namespace std;
 #include "Edificios.h"
 
 
-void asignarLaboratorios(int contador, int pos1, int &pos2, string lin, Edificio ed[], Laboratorios lab[], int contEdificios){
+void asignarLaboratoriosID(int contador, int pos1, int &pos2, string lin, Edificio ed[], Laboratorios lab[], int contEdificios){
     bool bandera; 
     int aux; 
     int cont = 0; 
@@ -36,7 +36,8 @@ void asignarLaboratorios(int contador, int pos1, int &pos2, string lin, Edificio
 
     }
 }
-void asignarSalones(int contador, int pos1, int &pos2, string lin, Edificio ed[], Salones sal[], int contEdificios){
+
+void asignarSalonesID(int contador, int pos1, int &pos2, string lin, Edificio ed[], Salones sal[], int contEdificios){
     bool bandera; 
     int aux; 
     int cont = 0; 
@@ -67,17 +68,178 @@ void asignarSalones(int contador, int pos1, int &pos2, string lin, Edificio ed[]
     }
 }
 
+void asignarLaboratoriosName(int contador, Edificio ed[], Laboratorios lab[], int contEdificios, int numLineas, string arrInfo[], int idComps[], int longIdComps, Computadora comps[], string arrInfoComps[]){
 
+    int aux1, aux2, aux3, aux4; 
+    int idComp; 
+    bool bandera; 
+
+    for(int i = 0; i < numLineas; i++){
+
+        aux1 = 0; 
+        while(!isspace(arrInfo[i][aux1]))
+            aux1++; 
+
+        for(int j = 0; j < contador; j++){
+            if(ed[contEdificios].getArrLabs(j) == stoi(arrInfo[i].substr(0, aux1))){
+
+                aux2 = aux1; 
+                while(!isspace(arrInfo[i][aux2+1]))
+                    aux2++; 
+                
+                lab[ed[contEdificios].getArrLabs(j)-1].setNameLab(arrInfo[i].substr(aux1, aux2));
+
+                aux3 = 0; 
+                while(!isspace(arrInfo[i][aux2+2])){
+                    aux2++;
+                    aux3++; 
+                }
+
+                lab[ed[contEdificios].getArrLabs(j)-1].setCapacidadLab(stoi(arrInfo[i].substr(aux2+2-aux3, aux3))); 
+
+                aux4 = 0; 
+                while(!isspace(arrInfo[i][aux2+aux3+1])){
+                    aux2++;
+                    aux4++; 
+                }
+
+                idComp = stoi(arrInfo[i].substr(aux2+aux3+1-aux4, aux4)); 
+
+                for(int k = 0; k < longIdComps; k++){
+                    if(idComps[k] == idComp){
+
+                        int before = 0, after = 0, after2 = 0;
+
+                        while(!isspace(arrInfoComps[k][before])){
+                            after++;
+                            before++; 
+                        }
+
+                        comps[k].setIdComputadora(stoi(arrInfoComps[k].substr(0, after)));
+
+                        while(!isspace(arrInfoComps[k][after+2])){
+                            after++;
+                            after2++; 
+                        }
+
+                        comps[k].setBrand(arrInfoComps[k].substr(after-after2, after2+2));
+
+                        after2 = 0; 
+                        while(!isspace(arrInfoComps[k][after+3])){
+                            after++;
+                            after2++; 
+                        }
+
+                        comps[k].setOs(arrInfoComps[k].substr(after+3-after2, after2));
+
+                        after2 = 0; 
+                        while(!isspace(arrInfoComps[k][after+4])){
+                            after++;
+                            after2++; 
+                        }
+
+                        comps[k].setRam(arrInfoComps[k].substr(after+4-after2, after2));
+
+                        lab[ed[contEdificios].getArrLabs(j)-1].setCompLab(comps[k]);
+                    }
+                }
+            }  
+        }
+    } 
+    
+}         
+
+void asignarSalonesName(int contador, Edificio ed[], Salones sal[], int contEdificios, int numLineas, string arrInfo[], int idComps[], int longIdComps, Computadora comps[], string arrInfoComps[]){
+
+    int aux1, aux2, aux3, aux4; 
+    int idComp;
+
+    for(int i = 0; i < numLineas; i++){
+
+        aux1 = 0; 
+        while(!isspace(arrInfo[i][aux1]))
+            aux1++; 
+
+        for(int j = 0; j < contador; j++){
+            if(ed[contEdificios].getArrSal(j) == stoi(arrInfo[i].substr(0, aux1))){
+
+                aux2 = aux1; 
+                while(!isspace(arrInfo[i][aux2+1]))
+                    aux2++; 
+                
+                sal[ed[contEdificios].getArrSal(j)-1].setNameSal(arrInfo[i].substr(aux1, aux2));
+
+                aux3 = 0; 
+                while(!isspace(arrInfo[i][aux2+2])){
+                    aux2++;
+                    aux3++; 
+                }
+
+                sal[ed[contEdificios].getArrSal(j)-1].setCapacidadSal(stoi(arrInfo[i].substr(aux2+2-aux3, aux3))); 
+                
+                aux4 = 0; 
+                while(!isspace(arrInfo[i][aux2+aux3+1])){
+                    aux2++;
+                    aux4++; 
+                }
+
+                idComp = stoi(arrInfo[i].substr(aux2+aux3+1-aux4, aux4));
+
+                for(int k = 0; k < longIdComps; k++){
+                    if(idComps[k] == idComp){
+
+                        int before = 0, after = 0, after2 = 0;
+
+                        while(!isspace(arrInfoComps[k][before])){
+                            after++;
+                            before++; 
+                        }
+
+                        comps[k].setIdComputadora(stoi(arrInfoComps[k].substr(0, after)));
+
+                        while(!isspace(arrInfoComps[k][after+2])){
+                            after++;
+                            after2++; 
+                        }
+
+                        comps[k].setBrand(arrInfoComps[k].substr(after-after2, after2+2));
+
+                        after2 = 0; 
+                        while(!isspace(arrInfoComps[k][after+3])){
+                            after++;
+                            after2++; 
+                        }
+
+                        comps[k].setOs(arrInfoComps[k].substr(after+3-after2, after2));
+
+                        after2 = 0; 
+                        while(!isspace(arrInfoComps[k][after+4])){
+                            after++;
+                            after2++; 
+                        }
+
+                        comps[k].setRam(arrInfoComps[k].substr(after+4-after2, after2));
+
+                        sal[ed[contEdificios].getArrSal(j)-1].setCompSal(comps[k]);
+                    }
+                }
+            }
+        }
+    } 
+
+}
 
 int main(void){
     
     Salones salon[20]; Laboratorios laboratorio[20]; Computadora computadoras[30]; Edificio edificios[4];
 
-    ifstream inEdificios;
+    ifstream inEdificios; inEdificios.open("edificios.txt"); 
+    ifstream inLabs; inLabs.open("laboratorios.txt");
+    ifstream inSals; inSals.open("salones.txt");
+    ifstream inComp; inComp.open("computadora.txt");
 
-    inEdificios.open("edificios.txt"); 
-
-    string linea; int x = 0; 
+    string linea, linea2, linea3, arrLabsInfo[20], arrSalInfo[20], arrCompInfo[30]; 
+    int x = 0, y = 0, z = 0, w = 0; 
     while(!inEdificios.eof()){
 
         getline(inEdificios, linea);
@@ -89,127 +251,140 @@ int main(void){
         int listaLabs[10]; 
 
         for(int i = 2; i < len; i++){
-
             for(int j = i+1; j < len; j++){
                 if(linea[j] == ' ')
                     contEspacios++; 
                 if(contEspacios == 1 && linea[j] == ' '){
-
                     edificios[x].setName(linea.substr(i, j-1)); 
-                    
-                    contLaboratorios = linea[j+1]-'0';
 
 /////////////////////////////////////////
 
+                    contLaboratorios = linea[j+1]-'0';
                     int k = 0; 
-                    asignarLaboratorios(contLaboratorios, j, k, linea, edificios, laboratorio, x);
-
-/* 
-                    int cont = 0;
-                    int k = j+2, u = 0, aux; 
-                    bool bandera;
-
-                    while(cont < contLaboratorios){
-
-                        bandera = false; aux = 0; 
-
-                        while(!isspace(linea[k])){
-                            bandera = true; 
-                            aux++;
-                            k++;
-                        } 
-
-                        if(!isspace(linea[k-aux])){
-                            if(edificios[x].agregarLab(stoi(linea.substr(k-aux, aux)))){
-                                laboratorio[stoi(linea.substr(k-aux, aux))-1].setIdLab(stoi(linea.substr(k-aux, aux))); 
-                            } 
-                        } 
-
-                        if(bandera){
-                            cont++; 
-                        }
-                        
-                        k++; 
-
-                    } */ 
-
-
+                    asignarLaboratoriosID(contLaboratorios, j, k, linea, edificios, laboratorio, x);
 
 /////////////////////////////////////////
 
                     contSalones = linea[k]-'0';
                     int m; 
-                    asignarSalones(contSalones, k, m, linea, edificios, salon, x);
-
-                    /* contSalones = linea[k]-'0'; cont = 0; 
-                    int m = k+2; 
-
-                    while(cont < contSalones){
-
-                        bandera = false; aux = 0; 
-
-                        while(!isspace(linea[m])){
-                            bandera = true; 
-                            aux++;
-                            m++;
-                        } 
-                        
-                        if(!isspace(linea[m-aux])){
-                            if(edificios[x].agregarSal(stoi(linea.substr(m-aux, aux)))){
-                                salon[stoi(linea.substr(m-aux, aux))-1].setIdSal(stoi(linea.substr(m-aux, aux))); 
-                            }
-                        }
-
-                        if(bandera){
-                            cont++; 
-                        }
-                        
-                        m++; 
-
-                    } */ 
+                    asignarSalonesID(contSalones, k, m, linea, edificios, salon, x);
 
                 }   
             }
         }
+
+///////////////////////////////////////// 
+
+        if(w == 0){
+            while(getline(inComp, linea3)){
+                arrCompInfo[w] = linea3; 
+                w++; 
+            }
+        }
+
+        int contDig, j, idComp[w]; 
+        for(int i = 0; i < w; i++){
+
+            j = 0; contDig = 0; 
+            while(!isspace(arrCompInfo[i][j])){
+                contDig++; 
+                j++;
+            }
+            
+            idComp[i] = stoi(arrCompInfo[i].substr(0, contDig));
+
+        }
+
+/////////////////////////////////////////
+
+        if(y == 0){
+            while(getline(inLabs, linea2)){
+                arrLabsInfo[y] = linea2; 
+                y++; 
+            }
+        }
+        int idCompL; 
+        asignarLaboratoriosName(contLaboratorios, edificios, laboratorio, x, y, arrLabsInfo, idComp, w, computadoras, arrCompInfo);
+        
+/////////////////////////////////////////
+  
+        if(z == 0){
+            while(getline(inSals, linea2)){
+                arrSalInfo[z] = linea2; 
+                z++; 
+            }
+        }
+        int idCompS;
+        asignarSalonesName(contSalones, edificios, salon, x, z, arrSalInfo, idComp, w, computadoras, arrCompInfo);
+
+///////////////////////////////////////// 
+
         x++;
     } 
 
-/*     for(Edificio c: edificios){
-        c.muestraLabEdificio();
-        cout << endl;  
-    }
+    char input; 
+    do{
 
-    cout << endl; 
+        cout << "\na. Consulta de todos los laboratorios que están en la lista.\nb. Consulta de todos los salones que están en la lista.\nc. Consulta de todos los edificios que están en la lista.\nd. Consulta de todas las computadoras disponibles.\ne. Consulta de computadoras por edificio.\nf. Consulta por clave de computadora.\ng. Consulta la lista de labs y salones en las que se tiene una marca de computadora\nh. Terminar\n";
+        cin >> input; 
+        
+        switch(input){
 
-    for(auto labs: laboratorio){
-        labs.muestraLab();
-        cout << endl; 
-    } 
+            case 'a': 
+                for(Laboratorios lab: laboratorio)
+                    lab.muestraLab();
+                break; 
 
-    cout << endl; 
+            case 'b': 
+                for(Salones sal: salon)
+                    sal.muestraSal();
+                break;
 
-    for(auto sals: salon){
-        sals.muestraSal();
-        cout << endl; 
-    }
+            case 'c': 
+                for(Edificio ed: edificios){
+                    ed.muestraLabEdificio();
+                    cout << endl;  
+                    ed.muestraSalEdificio();
+                    cout << endl;
+                }
+                break; 
 
-    for(int i = 0; i < 4; i++){
-        edificios[i].getArrLabs();
-        cout << " | "; 
-        edificios[i].getArrSal();
-        cout << endl; 
-    }
-*/
+            case 'd': 
+                for(Laboratorios lab: laboratorio){
+                    cout << "ID de Computadora: " << lab.getCompLab().getIdComputadora() << endl;
+                    lab.getCompLab().muestraComputadora(); 
+                    cout << "Laboratorio correspondiente: "; cout << lab.getIdLab() << ", "; cout << lab.getNameLab() << endl;  
+                    cout << endl; 
+                }
+                cout << "=====================\n";
+                for(Salones sal: salon){
+                    cout << "ID de Computadora: " << sal.getCompSal().getIdComputadora() << endl;
+                    sal.getCompSal().muestraComputadora(); 
+                    cout << "Salon correspondiente: "; cout << sal.getIdSal() << ", "; cout << sal.getNameSal() << endl;  
+                    cout << endl; 
+                }
+                
+                break; 
 
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 10; j++)
-            cout << edificios[i].getArrLabs(j) << " | " << edificios[i].getArrSal(j) << endl;
-        cout << endl;
-    }  
+            case 'e': 
+                break; 
 
+            case 'f': 
+                break; 
+
+            case 'g': 
+                break; 
+
+            case 'h': cout << "\nPrograma terminado...\nDoy mi palabra que he realizado esta actividad con integridad academica.\n"; return false;
+
+        }
+
+    }while(true); 
 
     inEdificios.close();
+    inSals.close();
+    inLabs.close();
+    inComp.close();
 
-    // cin.get();
     return 0; 
 }

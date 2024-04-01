@@ -21,6 +21,10 @@ class Computadora{
         void setIdComputadora(int id) { idComputadora = id; }
         int getIdComputadora() { return idComputadora; }
 
+        void muestraComputadora(){
+            std::cout << "Computadora: " << "\n" << "  - Marca: " << marca << "\n" << "  - OS: " << so << "\n" <<"  - Ram: " << ram<< "\n";
+        }
+
     private: 
         std::string ram;
         std::string marca;
