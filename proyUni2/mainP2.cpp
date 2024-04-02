@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <conio.h>
 using namespace std;
 
 #include "Edificios.h"
@@ -122,7 +123,7 @@ void asignarLaboratoriosName(int contador, Edificio ed[], Laboratorios lab[], in
                             after2++; 
                         }
 
-                        comps[k].setBrand(arrInfoComps[k].substr(after-after2, after2+2));
+                        comps[k].setBrand(arrInfoComps[k].substr(after-after2+1, after2+1));
 
                         after2 = 0; 
                         while(!isspace(arrInfoComps[k][after+3])){
@@ -202,7 +203,7 @@ void asignarSalonesName(int contador, Edificio ed[], Salones sal[], int contEdif
                             after2++; 
                         }
 
-                        comps[k].setBrand(arrInfoComps[k].substr(after-after2, after2+2));
+                        comps[k].setBrand(arrInfoComps[k].substr(after-after2+1, after2+1));
 
                         after2 = 0; 
                         while(!isspace(arrInfoComps[k][after+3])){
@@ -322,23 +323,40 @@ int main(void){
         x++;
     } 
 
+    int contadorLaboratoriosComp; 
+    int contadorSalonesComp; 
+    int contadorCompEd[4] = {0,0,0,0};
     char input; 
+    string marcas[4] = {"hp", "lenovo", "apple", "dell"};
+    string nombreEdificio;
+    string marcaLabs;
+    string marcaSal;
+    bool continua = true;
+    bool bandera = false; 
+    string marca;
     do{
 
-        // system("cls");
+        system("cls");
         cout << "\na. Consulta de todos los laboratorios que estan en la lista.\nb. Consulta de todos los salones que estan en la lista.\nc. Consulta de todos los edificios que estan en la lista.\nd. Consulta de todas las computadoras disponibles.\ne. Consulta de computadoras por edificio.\nf. Consulta por clave de computadora.\ng. Consulta la lista de labs y salones en las que se tiene una marca de computadora\nh. Terminar\n";
         cin >> input; 
+        cout << endl; 
         
         switch(input){
 
             case 'a': 
-                for(Laboratorios lab: laboratorio)
-                    lab.muestraLab();
+                for(Laboratorios lab: laboratorio){
+                    if(lab.getIdLab() != 0)
+                        lab.muestraLab();
+                }
+                getch(); 
                 break; 
 
             case 'b': 
-                for(Salones sal: salon)
-                    sal.muestraSal();
+                for(Salones sal: salon){
+                    if(sal.getIdSal() != 0)
+                        sal.muestraSal();
+                }
+                getch(); 
                 break;
 
             case 'c': 
@@ -348,6 +366,7 @@ int main(void){
                     ed.muestraSalEdificio();
                     cout << endl;
                 }
+                getch(); 
                 break; 
 
             case 'd': 
@@ -381,6 +400,7 @@ int main(void){
                     }
                 cout << endl; 
                 }
+                getch(); 
                 break; 
 
             case 'e': 
@@ -414,6 +434,7 @@ int main(void){
                     }
                     cout << endl; 
                 }
+                getch(); 
                 break; 
 
             case 'f': 
@@ -436,23 +457,98 @@ int main(void){
                         } 
                     }
                 } cout << endl; 
-                for(int j = 0; j < 10; j++){
+                for(int j = 0; j < 12; j++){
                     if(idComputadora == salon[j].getCompSal().getIdComputadora()){
                         salon[j].muestraSal(); 
                     }
-                } cout << endl; 
-                
-
+                } cout << endl;
+                getch(); 
                 break; 
 
             case 'g': 
+
+                bandera = false;  
+                do{
+
+                    cout << "Marca de computadora: "; cin >> marca; cout << endl; 
+
+                    for(char &c: marca)
+                        c = tolower(c);
+
+                    for(int i = 0; i < 4; i++){
+                        if(marca == marcas[i])
+                            bandera = true; 
+                    }
+
+                    if(bandera == false)
+                        cout << "Marca inexistente..." << endl; 
+                        
+                }while(bandera == false);
+
+                contadorLaboratoriosComp = 0; 
+                contadorSalonesComp = 0; 
+                
+                for(int i = 0; i < 4; i++){
+                    contadorCompEd[i] = 0; 
+                }
+                for(int i = 0; i < 22; i++){
+                    marcaLabs = computadoras[i].getBrand();
+                    for(char &c: marcaLabs)
+                        c = tolower(c);
+                    if(marcaLabs == marca){
+
+                        for(int j = 0; j < 10; j++){
+                            if(computadoras[i].getIdComputadora() == laboratorio[j].getCompLab().getIdComputadora()){
+                                contadorLaboratoriosComp++;       
+                                for(int k = 0; k < 4; k++){
+                                    for(int l = 0; l < 10; l++){
+                                        if(edificios[k].getArrLabs(l) == laboratorio[j].getIdLab()){
+                                            contadorCompEd[k]++;
+                                        }
+                                    }
+                                }
+                            }
+                        } 
+
+                        for(int j = 0; j < 12; j++){
+                            if(computadoras[i].getIdComputadora() == salon[j].getCompSal().getIdComputadora()){
+                                contadorSalonesComp++;       
+                                for(int k = 0; k < 4; k++){
+                                    for(int l = 0; l < 10; l++){
+                                        if(edificios[k].getArrSal(l) == salon[j].getIdSal()){
+                                            contadorCompEd[k]++;
+                                        }
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                } 
+
+                cout << endl << "Cantidad de computadoras " << marca << " en laboratorios: " << contadorLaboratoriosComp << endl; 
+                cout << "Cantidad de computadoras " << marca << " en salones: " << contadorSalonesComp << endl << endl; 
+
+                for(int i = 0; i < 4; i++){
+                    cout << "Edificio correspondiente: \n";
+                    cout << "Nombre: " << edificios[i].getName() << endl << "ID: " << edificios[i].getId() << endl; 
+                    cout << "Cantidad computadoras " << marca << " en Edificio " << i+1 << ": " << contadorCompEd[i] << endl << endl;
+                } 
+                getch(); 
                 break; 
 
-            case 'h': cout << "\nPrograma terminado...\nDoy mi palabra que he realizado esta actividad con integridad academica.\n"; return false;
+            case 'h': 
+                cout << "\nPrograma terminado...\nDoy mi palabra que he realizado esta actividad con integridad academica.\n"; 
+                return continua = false;
+                break; 
+
+            default: 
+                cout << "Opcion no valida...\n"; 
+                getch(); 
+                break; 
 
         }
 
-    }while(true); 
+    }while(continua == true); 
 
     inEdificios.close();
     inSals.close();

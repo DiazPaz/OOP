@@ -14,7 +14,23 @@ class Rectangulo{
     int getLargo();
     int getAncho();
 
-  private:
+    void dibuja() { 
+      for (int r = 1; r <= ancho; r++) { // dibujo completo el primero y el ultimo renglon
+        if (r == 1 || r == ancho) { 
+          for (int c = 1; c <= largo; c++)
+          cout<<"*";
+          cout<<endl;
+        } else {
+        // dibujo solo los caracteres de los extremos en los renglones del medio
+          cout<<"*";
+          for (int c = 2; c < largo; c++)
+            cout<<" ";
+          cout<<"*"<<endl;
+        }
+      }
+    }
+
+  protected:
     int largo;
     int ancho;
 
