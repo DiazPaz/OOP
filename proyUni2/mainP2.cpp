@@ -6,7 +6,6 @@ using namespace std;
 
 #include "Edificios.h"
 
-
 void asignarLaboratoriosID(int contador, int pos1, int &pos2, string lin, Edificio ed[], Laboratorios lab[], int contEdificios){
     bool bandera; 
     int aux; 
@@ -240,7 +239,7 @@ int main(void){
     ifstream inComp; inComp.open("computadora.txt");
 
     string linea, linea2, linea3, arrLabsInfo[20], arrSalInfo[20], arrCompInfo[30]; 
-    int x = 0, y = 0, z = 0, w = 0; 
+    int x = 0, y = 0, z = 0, w = 0, k = 0, m; 
     while(!inEdificios.eof()){
 
         getline(inEdificios, linea);
@@ -261,18 +260,20 @@ int main(void){
 /////////////////////////////////////////
 
                     contLaboratorios = linea[j+1]-'0';
-                    int k = 0; 
                     asignarLaboratoriosID(contLaboratorios, j, k, linea, edificios, laboratorio, x);
 
 /////////////////////////////////////////
 
                     contSalones = linea[k]-'0';
-                    int m; 
                     asignarSalonesID(contSalones, k, m, linea, edificios, salon, x);
 
                 }   
             }
         }
+
+/////////////////////////////////////////
+
+        edificios[x].setResponsable(linea.substr(m)); 
 
 ///////////////////////////////////////// 
 
@@ -294,7 +295,7 @@ int main(void){
             
             idComp[i] = stoi(arrCompInfo[i].substr(0, contDig));
 
-        }
+        } 
 
 /////////////////////////////////////////
 
@@ -322,6 +323,8 @@ int main(void){
 
         x++;
     } 
+
+///////////////////////////////////////// 
 
     int contadorLaboratoriosComp; 
     int contadorSalonesComp; 
