@@ -8,8 +8,8 @@ public:
 	void setSaldo(double s) { saldo = s; };
 	double getSaldo(){return saldo;};
 	void deposita(double cant);
-	bool retira(double cant);  // se debe redefinir en la clase Cheques
-	void mostrar();		   // se debe redefinir en la clase Cheques
+	virtual bool retira(double cant);  // se debe redefinir en la clase Cheques
+	virtual void mostrar();		   // se debe redefinir en la clase Cheques
 protected:
 	int numCuenta;
 	double saldo;
@@ -26,7 +26,8 @@ CtaBanc::CtaBanc(int n, double s)
 }
 
 void CtaBanc::deposita(double cant)
-{	saldo += cant;
+{	
+	saldo += cant;
 }
 
 // si hay suficiente saldo resta cant del saldo de la cuenta y manda true, si no hay suficiente saldo, solo manda false
