@@ -28,7 +28,7 @@ class Aparato : public Servicio
 
         void muestra()
         {
-            cout << "Descripcion: " << descripcion << endl << "Costo por cada 15 min: " << costoX15min << endl << "Instructor: ";
+            cout << "Descripcion: " << descripcion << "Clave del servicio: " << this->getClave() << endl << "Costo por cada 15 min: " << costoX15min << endl << "Instructor: ";
             if(conInstructor)
                 cout << "SI" << endl; 
             else

@@ -75,6 +75,7 @@ int main(void)
                 for(int i = 0; i < (sizeof(servicios) / sizeof(servicios[0])); i++)
                 {
                     servicios[i]->muestra();
+                    cout << ">>-->-->--<--<-<<\n";
                     cout << endl; 
                 }
                 system("pause && cls");
@@ -83,30 +84,17 @@ int main(void)
                 cout << endl; 
                 for(int i = 0; i < reservas; i++)
                 {
-                    if(reservaciones[i]->getClaveServicio()[0] == 'C' || reservaciones[i]->getClaveServicio()[0] == 'E' || reservaciones[i]->getClaveServicio()[0] == 'B')
+                    Hora h = reservaciones[i]->getHoraInicio(); 
+                    Hora f = h + reservaciones[i]->getDuracion();
+                    cout << "Clave de Servicio: " << reservaciones[i]->getClaveServicio() << "\nID del cliente: " << reservaciones[i]->getIdCliente() << "\nHora de inicio de reservacion: " << h << " || Hora de terminacion: " << f << endl << "Duracion (en minutos): " << reservaciones[i]->getDuracion() << endl;
+                    for(int j = 0; j < (sizeof(servicios) / sizeof(servicios[0])); j++)
                     {
-                        Hora h = reservaciones[i]->getHoraInicio(); 
-                        cout << "Clave de Servicio: " << reservaciones[i]->getClaveServicio() << "\nID del cliente: " << reservaciones[i]->getIdCliente() << "\nHora de inicio de reservacion: " << h << " || Duracion (minutos): " << reservaciones[i]->getDuracion() << endl;
-                        for(int j = 0; j < (sizeof(servicios) / sizeof(servicios[0])); j++)
+                        if(reservaciones[i]->getClaveServicio() == servicios[j]->getClave())
                         {
-                            if(reservaciones[i]->getClaveServicio() == servicios[j]->getClave())
-                            {
-                                servicios[j]->muestra();
-                                cout << endl; 
-                            }
-                        }
-                    }
-                    else if(reservaciones[i]->getClaveServicio()[0] == 'V' || reservaciones[i]->getClaveServicio()[0] == 'F' || reservaciones[i]->getClaveServicio()[0] == 'T')
-                    {
-                        Hora h = reservaciones[i]->getHoraInicio(); 
-                        cout << "Clave de Servicio: " << reservaciones[i]->getClaveServicio() << "\nID del cliente: " << reservaciones[i]->getIdCliente() << "\nHora de inicio de reservacion: " << h << " || Duracion (horas): " << reservaciones[i]->getDuracion() << endl;
-                        for(int j = 0; j < (sizeof(servicios) / sizeof(servicios[0])); j++)
-                        {
-                            if(reservaciones[i]->getClaveServicio() == servicios[j]->getClave())
-                            {
-                                servicios[j]->muestra();
-                                cout << endl; 
-                            }
+                            servicios[j]->muestra();
+                            cout << "Precio final: $" << servicios[j]->calculaCosto(reservaciones[i]->getDuracion()) << endl;
+                            cout << ">>-->-->--<--<-<<\n";
+                            cout << endl; 
                         }
                     }
                 }
@@ -129,16 +117,9 @@ int main(void)
                             {
                                 if(reservaciones[j]->getClaveServicio() == servicios[i]->getClave())
                                 {
-                                    if(reservaciones[j]->getClaveServicio()[0] == 'C' || reservaciones[j]->getClaveServicio()[0] == 'E' || reservaciones[j]->getClaveServicio()[0] == 'B')
-                                    {
-                                        Hora h = reservaciones[j]->getHoraInicio();
-                                        cout << "Hora de inicio de reservacion: " << h << "\nDuracion (minutos): " << reservaciones[j]->getDuracion() << endl; 
-                                    }
-                                    else if(reservaciones[j]->getClaveServicio()[0] == 'V' || reservaciones[j]->getClaveServicio()[0] == 'F' || reservaciones[j]->getClaveServicio()[0] == 'T')
-                                    {
-                                        Hora h = reservaciones[j]->getHoraInicio();
-                                        cout << "Hora de inicio de reservacion: " << h << "\nDuracion (horas): " << reservaciones[j]->getDuracion() << endl; 
-                                    }
+                                    Hora h = reservaciones[j]->getHoraInicio();
+                                    Hora f = h + reservaciones[j]->getDuracion();
+                                    cout << "- Hora de inicio de reservacion: " << h << " || Hora de terminacion: " << f << endl << "Duracion (en minutos): " << reservaciones[j]->getDuracion() << endl << endl; 
                                 }
                             }
                             bandera = true; 
@@ -157,26 +138,19 @@ int main(void)
                     cin >> horaAux; 
                     for(int i = 0; i < reservas; i++)
                     {
-                        Hora horaReserva = reservaciones[i]->getHoraInicio();
-                        if(horaReserva == horaAux)
+                        Hora h = reservaciones[i]->getHoraInicio();
+                        Hora f = h + reservaciones[i]->getDuracion();
+                        int d = reservaciones[i]->getDuracion();
+                        if((h == horaAux) || ((horaAux >= h) && (horaAux <= (h + d))))
                         {
                             cout << "\nExiste reservacion a la hora seleccionada: \n\n";
                             for(int j = 0; j < (sizeof(servicios) / sizeof(servicios[0])); j++)
                             {
-                                if(reservaciones[i]->getClaveServicio() ==  servicios[j]->getClave())
+                                if(reservaciones[i]->getClaveServicio() == servicios[j]->getClave())
                                 {
-                                    if(reservaciones[i]->getClaveServicio()[0] == 'C' || reservaciones[i]->getClaveServicio()[0] == 'E' || reservaciones[i]->getClaveServicio()[0] == 'B')
-                                    {
-                                        servicios[j]->muestra();
-                                        cout << "\nHora de inicio de reservacion: " << horaReserva << "\nDuracion (minutos): " << reservaciones[i]->getDuracion() << endl;
-                                        cout << "------------------------------\n";
-                                    }
-                                    else if(reservaciones[i]->getClaveServicio()[0] == 'V' || reservaciones[i]->getClaveServicio()[0] == 'F' || reservaciones[i]->getClaveServicio()[0] == 'T')
-                                    {
-                                        servicios[j]->muestra();
-                                        cout << "\nHora de inicio de reservacion: " << horaReserva << "\nDuracion (horas): " << reservaciones[i]->getDuracion() << endl;
-                                        cout << "------------------------------\n";
-                                    }
+                                    servicios[j]->muestra();
+                                    cout << "\nHora de inicio de reservacion: " << h << " || Hora de terminacion: " << f << endl << "| Duracion (en minutos): " << reservaciones[i]->getDuracion() << endl;
+                                    cout << "------------------------------\n";
                                 }
                             }
                             bandera = true; 
@@ -235,10 +209,7 @@ int main(void)
                     bandera3 = false;
                     do
                     { 
-                        if(clave[0] == 'C' || clave[0] == 'E' || clave[0] == 'B')
-                            cout << "\nDame la duracion de tu reservacion en minutos: ";
-                        else if(clave[0] == 'V' || clave[0] == 'F' || clave[0] == 'T')
-                            cout << "\nDame la duracion de tu reservacion en horas: ";
+                        cout << "\nDame la duracion de tu reservacion en minutos: ";
                         cin >> duracionAux; 
                         int i = 0, aux; 
                         for(i; i < (sizeof(servicios) / sizeof(servicios[0])); i++)
@@ -391,17 +362,18 @@ int main(void)
             case 'f':
                 outReservas.open("Reserva.txt");
                 for(int i = 0; i < reservas; i++)
-                {
                     outReservas << reservaciones[i]->getClaveServicio() << " " << reservaciones[i]->getHoraInicio().getHora() << " " << reservaciones[i]->getHoraInicio().getMin() << " " << reservaciones[i]->getDuracion() << " " << reservaciones[i]->getIdCliente() << "\n";
-                }
                 break; 
             default: 
                 cout << "\nOpcion invalida. Intente de nuevo.\n";
+                system("pause && cls");
                 break; 
         }
     }while(opcion != 'f');                    
     inServicios.close();
     inReservas.close();
-
     return 0; 
 }
+
+// hay que incluir la clave del servicio en la opcion a
+// hay que incluir las horas de terminacion en las reservaciones

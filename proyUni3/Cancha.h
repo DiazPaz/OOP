@@ -28,14 +28,14 @@ class Cancha : public Servicio
 
         void muestra()
         {
-            cout << "Deporte: " << deporte << endl << "Costo por hora: " << costoXHr << endl << "Cantidad de Personas: " << cantMaxPers << endl;
+            cout << "Deporte: " << deporte << endl << "Clave del servicio: " << this->getClave() << endl << "Costo por hora: " << costoXHr << endl << "Cantidad de Personas: " << cantMaxPers << endl;
         }
 
         double calculaCosto(int tiempo)
         {
             double costoFinal = 0; 
-            if(tiempo > 1)  
-                return costoFinal = tiempo * costoXHr; 
+            if(tiempo > 60)  
+                return costoFinal = (tiempo/60) * costoXHr; 
             else 
                 return costoFinal = costoXHr;
         }

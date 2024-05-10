@@ -74,7 +74,6 @@ class Hora
                 os << dato.hh << ":" << dato.mm;
             return os; 
         }
-
 };
 
 #endif
