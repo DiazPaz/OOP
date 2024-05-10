@@ -28,16 +28,16 @@ class Cancha : public Servicio
 
         void muestra()
         {
-            cout << "Deporte: " << deporte << endl << "Costo ( $50 / 1 hora ): " << costoXHr << endl << "Cantidad de Personas: " << cantMaxPers;
+            cout << "Deporte: " << deporte << endl << "Costo por hora: " << costoXHr << endl << "Cantidad de Personas: " << cantMaxPers << endl;
         }
 
         double calculaCosto(int tiempo)
         {
-            // costo: $50 por cada hora
-            if(tiempo > 1)
-                return costoXHr = tiempo * 50; 
+            double costoFinal = 0; 
+            if(tiempo > 1)  
+                return costoFinal = tiempo * costoXHr; 
             else 
-                return costoXHr = 50;
+                return costoFinal = costoXHr;
         }
 
 };

@@ -1,1 +1,1 @@
-cout << endl;
+    // strcat(nombre, exclamaciones);

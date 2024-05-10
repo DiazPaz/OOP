@@ -55,7 +55,9 @@ class Hora
 
         friend istream& operator>>(istream &is, Hora &dato)
         {
+            cout << "\nHora: ";
             is >> dato.hh;
+            cout << "Minutos: ";
             is >> dato.mm;
             return is;  
         }

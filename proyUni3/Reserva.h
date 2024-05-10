@@ -32,7 +32,7 @@ class Reserva
         void setIdCliente(int id){ idCliente = id; }
         void setHoraInicio(Hora inicio){ horaInicio = inicio; }
         void setDuracion(int dura){ duracion = dura; }
-        
+
         string getClaveServicio(){ return claveServicio; }
         int getIdCliente(){ return idCliente; }
         Hora getHoraInicio(){ return horaInicio; }

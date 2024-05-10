@@ -28,7 +28,7 @@ class Aparato : public Servicio
 
         void muestra()
         {
-            cout << "Descripcion: " << descripcion << endl << "Costo ( $20 / 15 minutos ): " << costoX15min << endl << "Instructor: ";
+            cout << "Descripcion: " << descripcion << endl << "Costo por cada 15 min: " << costoX15min << endl << "Instructor: ";
             if(conInstructor)
                 cout << "SI" << endl; 
             else
@@ -37,11 +37,11 @@ class Aparato : public Servicio
 
         double calculaCosto(int tiempo)
         {
-            // costo: $20 por cada 15 minutos
+            double costoFinal = 0; 
             if(tiempo >= 15)
-                return costoX15min = (tiempo / 15) * 20; 
+                return costoFinal = (tiempo / 15) * costoX15min; 
             else 
-                return costoX15min = 20;
+                return costoFinal = costoX15min;
         }
 
 };
