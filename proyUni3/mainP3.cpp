@@ -374,6 +374,3 @@ int main(void)
     inReservas.close();
     return 0; 
 }
-
-// hay que incluir la clave del servicio en la opcion a
-// hay que incluir las horas de terminacion en las reservaciones
