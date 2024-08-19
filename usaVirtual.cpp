@@ -8,7 +8,7 @@ using namespace std;
 int main(void)
 {
 
-    Figura *arr[5];
+    Figura *arr[6];
     arr[0] = new Triangulo();
     arr[1] = new Cuadrado();
     arr[2] = new Triangulo();
